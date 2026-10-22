@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/u/:slug", "destination": "[slug].html" }
+    { "source": "/u/:slug", "destination": "invitation.html" }
   ],
   "cleanUrls": true,
   "trailingSlash": false,
