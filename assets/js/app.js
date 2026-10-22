@@ -8,31 +8,44 @@ function escapeHtml(str) {
 }
 
 (async function init() {
+  // ==========================================
+  // PERBAIKAN LOGIKA SLUG URL
+  // ==========================================
   const parts = location.pathname.split('/').filter(Boolean);
-  const slug = parts[parts.length - 1].replace('.html', '') || 'rud-tuakia';
+  let slug = parts[parts.length - 1].replace('.html', ''); 
+  
+  // Jika URL tidak memiliki slug (misal hanya /u/), kita set default
+  if (!slug || slug === 'u') {
+    slug = 'rud-tuakia'; 
+  }
 
   let graduates = {};
   try {
+    // Fetch data dengan path relatif
     const res = await fetch('./data/graduates.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error('Gagal mengambil data JSON');
     graduates = await res.json();
   } catch (e) {
     console.error('Gagal load graduates.json', e);
   }
 
   const grad = graduates[slug];
+  
+  // Jika data tidak ditemukan di JSON
   if (!grad) {
     document.body.innerHTML = `
       <div style="min-height:100vh;display:grid;place-items:center;text-align:center;
                   padding:20px;font-family:'DM Sans',sans-serif;color:#f8f5ee">
         <div>
           <h1 style="font-size:2rem;margin-bottom:12px">Undangan tidak ditemukan</h1>
-          <p style="color:#aab2ca">Cek kembali link yang Anda terima.</p>
-          <a href="./" style="color:#e8ca8b;display:inline-block;margin-top:18px">← Kembali</a>
+          <p style="color:#aab2ca">Data untuk "${slug}" tidak ada di graduates.json.</p>
+          <a href="/" style="color:#e8ca8b;display:inline-block;margin-top:18px">← Kembali</a>
         </div>
       </div>`;
     return;
   }
 
+  // Lanjut mengisi konten jika data ditemukan
   document.title = `Undangan Wisuda — ${grad.full_name}`;
 
   if (grad.hero_kicker) setText('heroKicker', grad.hero_kicker);
