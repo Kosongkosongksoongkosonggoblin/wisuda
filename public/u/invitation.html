@@ -1,1 +1,166 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080b18">
+<title>Elevate — Undangan Wisuda</title>
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<canvas id="stars"></canvas>
 
+<header class="wrap nav">
+  <div class="logo">ELEVATE <b>✦</b> GRADUATION</div>
+  <nav>
+    <a href="#detail">Detail</a>
+    <a href="#acara">Acara</a>
+    <a href="#gallery">Galeri</a>
+    <a href="#lokasi">Lokasi</a>
+    <a href="#wishes">Ucapan</a>
+    <a href="#rsvp">RSVP</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <div>
+      <div class="kicker" id="heroKicker">A new chapter begins · 2026</div>
+      <div id="greetWrap"></div>
+      <h1 id="heroTitle">Made for<br>this <em>moment.</em></h1>
+      <p class="lead" id="heroLead">
+        Sebuah perjalanan, ribuan cerita, dan satu pencapaian yang layak dirayakan.
+      </p>
+      <div class="actions">
+        <a class="btn" href="#detail">Jelajahi undangan <span>↘</span></a>
+        <button class="btn ghost" id="startMusic">♫ Aktifkan musik</button>
+      </div>
+      <p class="note" id="gradName">— · UNDANGAN WISUDA DIGITAL</p>
+    </div>
+    <div class="stage" aria-label="Ilustrasi topi wisuda 3D">
+      <div class="orbit"><i class="orb"></i></div>
+      <div class="orbit two"><i class="orb blue"></i></div>
+      <div class="gradcap">
+        <div class="cap-top"></div>
+        <div class="cap-base"></div>
+        <div class="cap-band"></div>
+        <div class="tassel"></div>
+      </div>
+      <div class="glass">DREAM · ACHIEVE · CELEBRATE</div>
+    </div>
+  </section>
+
+  <section class="section light center" id="detail">
+    <div class="wrap reveal">
+      <div class="kicker" style="color:#9c7537">The celebration</div>
+      <h2>Satu babak selesai.<br><em>Babak baru dimulai.</em></h2>
+      <p class="desc" id="detailDesc">
+        Setiap langkah kecil membawa kami ke momen besar ini.
+      </p>
+
+      <div class="date">
+        <strong id="gradDay">24</strong>
+        <div>
+          <b id="gradMonth">OKTOBER 2026</b><br>
+          <span id="gradTime">SABTU · 08.00 WIB – SELESAI</span>
+        </div>
+      </div>
+
+      <div class="countdown" id="countdown" aria-live="polite"></div>
+
+      <div class="cards">
+        <article class="card tilt">
+          <div class="ico">◷</div>
+          <h3>Waktu &amp; tanggal</h3>
+          <p id="cardTime">Memuat...</p>
+        </article>
+        <article class="card tilt">
+          <div class="ico">⌖</div>
+          <h3>Lokasi acara</h3>
+          <p id="cardVenue">Memuat...</p>
+        </article>
+        <article class="card tilt">
+          <div class="ico">✧</div>
+          <h3>Dress code</h3>
+          <p id="cardDress">Formal modern · earth tone</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="acara">
+    <div class="wrap reveal center">
+      <div class="kicker">The timeline</div>
+      <h2>Hari yang istimewa.</h2>
+      <p class="desc">Simpan jadwal ini dan mari rayakan setiap pencapaian bersama.</p>
+      <div class="timeline" id="timeline"></div>
+    </div>
+  </section>
+
+  <section class="section light center" id="gallery">
+    <div class="wrap reveal">
+      <div class="kicker" style="color:#9c7537">Journey</div>
+      <h2>Kenangan <em>bersama.</em></h2>
+      <div class="cards" id="galleryList"></div>
+    </div>
+  </section>
+
+  <section class="section center" id="lokasi">
+    <div class="wrap reveal">
+      <div class="kicker">Find the venue</div>
+      <h2>See you <em>there.</em></h2>
+      <p class="desc" id="venueDesc">Auditorium Universitas · Kota Anda</p>
+      <div class="mapcard">
+        <div class="pin">⌖</div>
+        <h3 id="venueName">Tempat perayaan</h3>
+        <p style="color:#b9c1d8" id="venueAddress">—</p>
+        <a class="btn" id="mapsBtn" target="_blank" rel="noopener"
+           href="#" style="margin-top:18px">Buka Google Maps ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="wishes">
+    <div class="wrap reveal center">
+      <div class="kicker">Wall of wishes</div>
+      <h2>Kata <em>mereka.</em></h2>
+      <p class="desc">Ucapan dan doa dari orang-orang terkasih.</p>
+      <div class="cards" id="wishesList"></div>
+    </div>
+  </section>
+
+  <section class="section light center" id="rsvp">
+    <div class="wrap reveal">
+      <div class="kicker" style="color:#9c7537">Kindly respond</div>
+      <h2>Can you <em>make it?</em></h2>
+      <p class="desc">Mohon konfirmasi kehadiran Anda. Kami tak sabar merayakan momen ini bersama Anda.</p>
+      <form class="form" id="rsvpForm">
+        <label for="nama">Nama lengkap</label>
+        <input id="nama" required placeholder="Nama Anda">
+        <label for="hadir">Konfirmasi kehadiran</label>
+        <select id="hadir">
+          <option>Hadir</option>
+          <option>Belum bisa hadir</option>
+        </select>
+        <label for="pesan">Ucapan dan doa (opsional)</label>
+        <textarea id="pesan" placeholder="Tuliskan pesan hangat..."></textarea>
+        <button class="btn" type="submit">Kirim RSVP via WhatsApp ↗</button>
+        <p class="note">Data akan dikirim melalui WhatsApp.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  Dibuat dengan rasa syukur dan cinta.<br>
+  <strong id="footerName">—</strong> · 2026
+</footer>
+
+<button class="music" id="musicBtn">
+  <span class="pulse"></span><b id="musicLabel">Musik: putar ♫</b>
+</button>
+
+<script src="/assets/js/stars.js" defer></script>
+<script src="/assets/js/app.js" defer></script>
+</body>
+</html>
