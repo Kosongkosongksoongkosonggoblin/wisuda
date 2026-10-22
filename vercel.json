@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/u/:slug", "destination": "/public/u/index.html" }
+    { "source": "/public/u/:slug", "destination": "/public/u/index.html" }
   ],
   "cleanUrls": true,
   "trailingSlash": false,
