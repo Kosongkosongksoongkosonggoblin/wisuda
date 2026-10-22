@@ -1,1 +1,35 @@
-
+{
+  "rizky-nabila": {
+    "slug": "Rud Tuakia",
+    "full_name": "Rud Tuakia",
+    "nickname": "Rizky",
+    "nim": "20200101",
+    "major": "Teknik Informatika",
+    "faculty": "Fakultas Teknik",
+    "university": "Universitas Nusantara",
+    "graduation_date": "2026-10-24T08:00:00+07:00",
+    "photo_url": "/assets/img/hero.jpg",
+    "quote": "Setiap langkah kecil membawa kami ke momen besar ini.",
+    "whatsapp_number": "6281234567890",
+    "venue_name": "Auditorium Universitas Pattimura",
+    "venue_address": "Jl. Pendidikan No. 1, Kota Anda",
+    "maps_url": "https://maps.google.com/?q=auditorium+universitas",
+    "dress_code": "Formal modern · earth tone",
+    "hero_kicker": "A new chapter begins · 2026",
+    "hero_title_line1": "Made for",
+    "hero_title_line2": "this",
+    "hero_title_em": "moment.",
+    "hero_lead": "Sebuah perjalanan, ribuan cerita, dan satu pencapaian yang layak dirayakan. Dengan penuh syukur, kami mengundang Anda untuk menjadi bagian dari hari istimewa ini.",
+    "schedules": [
+      { "time": "07.00 WIB", "title": "Welcome & registration", "desc": "Penyambutan tamu dan registrasi" },
+      { "time": "08.00 WIB", "title": "Opening ceremony", "desc": "Pembukaan dan doa bersama" },
+      { "time": "09.00 WIB", "title": "Graduation moment", "desc": "Prosesi wisuda dan sesi penghargaan" },
+      { "time": "11.00 WIB", "title": "Memories together", "desc": "Foto bersama dan ramah tamah" }
+    ],
+    "galleries": [
+      { "url": "/assets/img/gallery-1.jpg", "caption": "Awal perjalanan" },
+      { "url": "/assets/img/gallery-2.jpg", "caption": "Bersama teman" },
+      { "url": "/assets/img/gallery-3.jpg", "caption": "Hari kelulusan" }
+    ]
+  }
+}
