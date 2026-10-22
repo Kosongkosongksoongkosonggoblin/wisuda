@@ -15,7 +15,7 @@ function escapeHtml(str) {
 (async function init() {
   // 1. Ambil slug dari URL: /u/rudituakia
   const parts = location.pathname.split('/').filter(Boolean);
-  const slug = parts[parts.length - 1].replace('.html', '') || 'rudi-tuakia';
+  const slug = parts[parts.length - 1].replace('.html', '') || 'rud-tuakia';
 
   // 2. Fetch graduates
   let graduates = {};
