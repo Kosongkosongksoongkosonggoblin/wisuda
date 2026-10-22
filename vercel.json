@@ -1,1 +1,15 @@
-
+{
+  "rewrites": [
+    { "source": "/u/:slug", "destination": "/u/invitation.html" }
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
+  ]
+}
