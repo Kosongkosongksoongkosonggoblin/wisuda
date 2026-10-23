@@ -11,7 +11,7 @@
 <body>
 <canvas id="stars"></canvas>
 
-<!-- SLIDE 1: HERO -->
+<!-- SLIDE 1: HERO / PEMBUKA -->
 <section class="slide active" id="slide-1">
   <div class="slide-content hero-layout">
     <div style="text-align: left; position: relative; z-index: 5;">
@@ -20,15 +20,18 @@
       <h1 id="heroTitle">Made for<br>this <em>moment.</em></h1>
       <p class="lead" id="heroLead">Sebuah perjalanan, ribuan cerita, dan satu pencapaian yang layak dirayakan.</p>
       
+      <!-- Nama & Gelar Mewah -->
       <div class="name-tag">
         <span class="line"></span>
         <span class="name-text">RUDI TUAKIA, ST</span>
       </div>
     </div>
 
+    <!-- Foto & Orbit -->
     <div class="stage">
       <div class="orbit"><i class="orb"></i></div>
       <div class="orbit two"><i class="orb blue"></i></div>
+      <div class="glow-effect"></div> <!-- Efek Cahaya -->
       
       <div class="photo-frame">
         <img src="../assets/img/foto-profil.PNG" alt="Foto Rud Tuakia" class="hero-photo">
@@ -37,7 +40,7 @@
   </div>
 </section>
 
-<!-- SLIDE 2: DETAIL -->
+<!-- SLIDE 2: TANGGAL & DETAIL -->
 <section class="slide" id="slide-2">
   <div class="slide-content">
     <div class="kicker">The celebration</div>
@@ -52,29 +55,35 @@
       </div>
     </div>
 
-    <div class="countdown" id="countdown"></div>
+    <div class="countdown" id="countdown" aria-live="polite"></div>
     
     <div class="cards">
-      <article class="card">
-        <div class="ico">◷</div><h3>Waktu</h3><p id="cardTime">Memuat...</p>
+      <article class="card tilt">
+        <div class="ico">◷</div>
+        <h3>Waktu</h3>
+        <p id="cardTime">Memuat...</p>
       </article>
-      <article class="card">
-        <div class="ico">⌖</div><h3>Lokasi</h3><p id="cardVenue">Memuat...</p>
+      <article class="card tilt">
+        <div class="ico">⌖</div>
+        <h3>Lokasi</h3>
+        <p id="cardVenue">Memuat...</p>
       </article>
-      <article class="card">
-        <div class="ico">✧</div><h3>Dress code</h3><p id="cardDress">Formal modern</p>
+      <article class="card tilt">
+        <div class="ico">✧</div>
+        <h3>Dress code</h3>
+        <p id="cardDress">Formal modern</p>
       </article>
     </div>
   </div>
 </section>
 
-<!-- SLIDE 3: TIMELINE -->
+<!-- SLIDE 3: TIMELINE ACARA -->
 <section class="slide" id="slide-3">
   <div class="slide-content">
     <div class="kicker">The timeline</div>
     <h2>Hari yang istimewa.</h2>
     <p class="desc">Simpan jadwal ini dan mari rayakan setiap pencapaian bersama.</p>
-    <div class="timeline" id="timeline"></div>
+    <div class="timeline" id="timeline" style="width: 100%; max-width: 600px; margin-top: 20px;"></div>
   </div>
 </section>
 
@@ -83,15 +92,16 @@
   <div class="slide-content">
     <div class="kicker">Journey</div>
     <h2>Kenangan <em>bersama.</em></h2>
-    <div class="cards" id="galleryList"></div>
+    <div class="cards" id="galleryList" style="margin-top: 30px;"></div>
   </div>
 </section>
 
-<!-- SLIDE 5: MAPS -->
+<!-- SLIDE 5: LOKASI MAPS -->
 <section class="slide" id="slide-5">
   <div class="slide-content">
     <div class="kicker">Find the venue</div>
     <h2>See you <em>there.</em></h2>
+    
     <div class="map-wrapper">
       <iframe 
         id="googleMapsIframe"
@@ -103,19 +113,21 @@
         <div class="pin">⌖</div>
         <h3 id="venueName">Tempat perayaan</h3>
         <p id="venueAddress">—</p>
-        <a class="btn" id="mapsBtn" target="_blank" rel="noopener" href="#">Buka di Google Maps ↗</a>
+        <a class="btn" id="mapsBtn" target="_blank" rel="noopener" href="#">
+          Buka di Google Maps ↗
+        </a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SLIDE 6: WISHES -->
+<!-- SLIDE 6: WALL OF WISHES -->
 <section class="slide" id="slide-6">
   <div class="slide-content">
     <div class="kicker">Wall of wishes</div>
     <h2>Kata <em>mereka.</em></h2>
     <p class="desc">Ucapan dan doa dari orang-orang terkasih.</p>
-    <div class="cards" id="wishesList"></div>
+    <div class="cards" id="wishesList" style="margin-top: 20px;"></div>
   </div>
 </section>
 
@@ -140,11 +152,12 @@
       <textarea id="pesan" placeholder="Tuliskan pesan hangat..." style="width:100%; margin-bottom:20px; padding:12px; border-radius:10px; border:1px solid var(--line); background:#ffffff0a; color:white; min-height: 80px;"></textarea>
       
       <button class="btn" type="submit" style="width:100%; justify-content:center;">Kirim RSVP via WhatsApp ↗</button>
+      <p class="note" style="text-align: center; margin-top: 15px; font-size: 0.8rem; color: var(--muted);">Data akan dikirim melalui WhatsApp.</p>
     </form>
   </div>
 </section>
 
-<!-- TOMBOL PANAH -->
+<!-- TOMBOL PANAH NAVIGASI -->
 <div class="nav-controls">
   <button class="nav-btn" id="btnPrev" disabled>←</button>
   <button class="nav-btn" id="btnNext">→</button>
