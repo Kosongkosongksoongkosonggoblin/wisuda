@@ -21,7 +21,7 @@ const dataGraduates = {
     "university": "Universitas Nusantara",
     "graduation_date": "2026-10-24T08:00:00+07:00",
     "quote": "Setiap langkah kecil membawa kami ke momen besar ini.",
-    "whatsapp_number": "6281234567890",
+    "whatsapp_number": "6285849379953",
     "venue_name": "Auditorium Universitas Pattimura",
     "venue_address": "Jl. Pendidikan No. 1, Kota Anda",
     "maps_url": "https://maps.google.com/?q=auditorium+universitas",
