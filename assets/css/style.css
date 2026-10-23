@@ -9,24 +9,29 @@ html, body {
   margin: 0; padding: 0; width: 100%; height: 100vh;
   background: var(--bg); color: var(--ink);
   font-family: 'DM Sans', sans-serif; 
-  overflow: hidden;
+  overflow: hidden; /* Kunci scroll layar utama */
 }
 body:before{
   content:"";position:fixed;inset:0;z-index:-2;
-  background: radial-gradient(ellipse at 15% 20%,#34458a55,transparent 36%), linear-gradient(140deg,#080b18,#101329 55%,#090b17);
+  background:
+    radial-gradient(ellipse at 15% 20%,#34458a55,transparent 36%),
+    radial-gradient(ellipse at 90% 55%,#8756a433,transparent 33%),
+    linear-gradient(140deg,#080b18,#101329 55%,#090b17);
 }
 canvas#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
 
-/* SLIDE SYSTEM (SIMPLE) */
+/* =========================================
+   STRUKTUR SLIDE (TANPA ANIMASI TRANSPARAN)
+   ========================================= */
 .slide {
   position: fixed; inset: 0;
   width: 100%; height: 100vh;
-  display: none; /* Hanya yang aktif yang tampil */
+  display: none; /* Sembunyikan secara default */
   flex-direction: column;
   align-items: center; justify-content: center;
   z-index: 10;
 }
-.slide.active { display: flex; } /* Tampilkan tanpa animasi transparan */
+.slide.active { display: flex; } /* Hanya tampilkan yang aktif */
 
 .slide-content {
   width: min(1120px, 90%); 
