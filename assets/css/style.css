@@ -250,3 +250,53 @@ canvas#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
 @media(prefers-reduced-motion:reduce){
   *,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}
 }
+
+
+/* =========================================
+   PERBAIKAN DARURAT UNTUK LAYAR HP
+   ========================================= */
+@media (max-width: 760px) {
+  /* 1. Paksa tanggal agar mengecil dan berada di tengah */
+  .date {
+    flex-direction: column !important;
+    gap: 10px !important;
+    padding: 15px 20px !important;
+    width: 90% !important;
+    margin: 20px auto !important;
+  }
+  .date div {
+    text-align: center !important;
+  }
+
+  /* 2. Paksa kotak countdown agar tidak meluber ke samping */
+  .countdown {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    padding: 0 15px !important;
+  }
+  .cd-box {
+    padding: 15px 10px !important;
+  }
+
+  /* 3. Paksa kartu (Waktu, Lokasi, Dresscode) agar lebar 100% layar */
+  .cards {
+    grid-template-columns: 1fr !important;
+    padding: 0 15px !important;
+  }
+  .card {
+    padding: 20px !important;
+  }
+
+  /* 4. Paksa timeline agar teksnya turun ke bawah (tidak sejajar) */
+  .event {
+    grid-template-columns: 1fr !important;
+    gap: 5px !important;
+    text-align: left !important;
+  }
+
+  /* 5. Paksa form RSVP agar tidak melebar */
+  .form {
+    width: 100% !important;
+    padding: 0 15px !important;
+  }
+}
