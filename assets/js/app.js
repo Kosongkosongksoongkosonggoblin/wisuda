@@ -65,7 +65,7 @@ const dataWishes = [
     <article class="card"><p>"${w.message}"</p><p style="color:var(--gold)">— ${w.name}</p></article>
   `).join('');
 
-  // Logika Tombol Panah
+  // Logika Tombol Panah Sederhana
   const slides = document.querySelectorAll('.slide');
   const btnNext = $('btnNext');
   const btnPrev = $('btnPrev');
@@ -74,12 +74,12 @@ const dataWishes = [
   function showSlide(index) {
     slides.forEach(s => s.classList.remove('active'));
     slides[index].classList.add('active');
-    btnPrev.disabled = index === 0;
-    btnNext.disabled = index === slides.length - 1;
+    if(btnPrev) btnPrev.disabled = index === 0;
+    if(btnNext) btnNext.disabled = index === slides.length - 1;
   }
 
   showSlide(0);
 
-  btnNext.addEventListener('click', () => { if (currentSlide < slides.length - 1) showSlide(++currentSlide); });
-  btnPrev.addEventListener('click', () => { if (currentSlide > 0) showSlide(--currentSlide); });
+  if(btnNext) btnNext.addEventListener('click', () => { if (currentSlide < slides.length - 1) showSlide(++currentSlide); });
+  if(btnPrev) btnPrev.addEventListener('click', () => { if (currentSlide > 0) showSlide(--currentSlide); });
 })();
