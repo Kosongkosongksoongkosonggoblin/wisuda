@@ -248,11 +248,10 @@ canvas#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
 /* Gaya untuk Foto Profil di Hero (Transparan & Bergerak) */
 .photo-frame {
   position: relative;
-  width: 320px;
-  height: 480px; /* Tinggi ditambah agar foto tidak menutupi teks */
+  width: 260px;  /* <-- Diperkecil dari 320px */
+  height: 420px; /* <-- Diperkecil dari 480px */
   background: transparent;
   z-index: 2;
-  /* Memunculkan kembali animasi mengambang */
   animation: floatPhoto 6s ease-in-out infinite; 
 }
 
@@ -260,23 +259,15 @@ canvas#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
   width: 100%;
   height: 100%;
   object-fit: contain; 
-  /* Posisi foto dinaikkan agar tidak menabrak teks di bawahnya */
   object-position: center top; 
-  /* Efek cahaya (glow) tipis di sekitar foto */
   filter: drop-shadow(0 20px 30px rgba(232, 202, 139, 0.15)); 
 }
 
-/* Animasi foto mengambang pelan */
-@keyframes floatPhoto {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); } /* Jarak mengambang diperbesar sedikit */
-}
-
-/* Responsif untuk HP */
+/* Jangan lupa sesuaikan juga ukuran untuk HP agar tidak terlalu kecil */
 @media(max-width: 760px) {
   .photo-frame {
-    width: 260px;
-    height: 380px;
+    width: 220px; /* <-- Ukuran di HP */
+    height: 340px;
     margin: 0 auto;
   }
 }
