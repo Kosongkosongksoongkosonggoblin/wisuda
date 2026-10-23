@@ -4,66 +4,78 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#080b18">
-  <title>Undangan Wisuda</title>
-  <link rel="icon" type="image/png" href="/assets/img/logo.PNG">
+  <title>Elevate — Pilih Undangan</title>
+  <link rel="icon" type="image/png" href="./assets/img/logo.PNG">
   <link rel="stylesheet" href="./assets/css/style.css">
   <style>
+    /* CSS Khusus Halaman Depan */
+    body { overflow: auto !important; background: #080b18; color: #f8f5ee; font-family: 'DM Sans', sans-serif; }
     .landing{display:grid;place-items:center;min-height:100vh;padding:40px 0}
     .landing-inner{width:min(560px,91%)}
     .list{display:grid;gap:16px;margin-top:28px}
     .list a{
       padding:22px 26px;border-radius:18px;text-decoration:none;
-      border:1px solid var(--line);background:#ffffff08;color:var(--ink);
-      transition:.25s;display:block;
+      border:1px solid #ffffff20;background:#ffffff08;color:#f8f5ee;
+      transition:.25s;display:block; cursor:pointer;
     }
-    .list a:hover{border-color:var(--gold);transform:translateY(-3px)}
+    .list a:hover{border-color:#e8ca8b;transform:translateY(-3px); box-shadow: 0 10px 30px rgba(232,202,139,0.1);}
     .list b{font-size:1.1rem;display:block}
-    .list small{color:var(--muted);font-size:.82rem;display:block;margin-top:6px}
+    .list small{color:#aab2ca;font-size:.82rem;display:block;margin-top:6px}
   </style>
 </head>
 <body>
-  <canvas id="stars"></canvas>
+  <canvas id="stars" style="position:fixed; inset:0; z-index:-1; pointer-events:none;"></canvas>
 
   <div class="landing">
     <div class="landing-inner">
       <div class="kicker">Graduation</div>
       <h1 style="font:clamp(2.5rem,7vw,4rem)/1 'Playfair Display',serif;margin:14px 0 6px">
-        Pilih <em style="color:var(--gold);font-style:italic">undangan.</em>
+        Pilih <em style="color:#e8ca8b;font-style:italic">undangan.</em>
       </h1>
-      <p style="color:var(--muted);line-height:1.7;margin:0 0 10px">
+      <p style="color:#aab2ca;line-height:1.7;margin:0 0 10px">
         Silakan pilih wisudawan yang ingin Anda kunjungi undangannya.
       </p>
-      <div class="list" id="list">
-        <p style="color:var(--muted)">Memuat...</p>
+      
+      <!-- Kotak Daftar Undangan (LANGSUNG MENGARAH KE URL) -->
+      <div class="list">
+        <a href="./u/undangan.html">
+          <b>Rud Tuakia</b>
+          <small>Teknik Informatika · Universitas Pattimura</small>
+        </a>
       </div>
-      <p class="note" style="text-align:center;margin-top:30px">
-        © 2026 .Dibuat dengan rasa syukur
+
+      <p class="note" style="text-align:center;margin-top:30px; color:#858da9; font-size:0.8rem;">
+        © 2026 Elevate · Dibuat dengan rasa syukur
       </p>
     </div>
   </div>
 
-  <script src="./assets/js/stars.js" defer></script>
+  <!-- Animasi Bintang -->
   <script>
-    fetch('./assets/js/app.js')
-      .then(r => r.json())
-      .then(data => {
-        const list = document.getElementById('list');
-        const items = Object.values(data);
-        if (!items.length) {
-          list.innerHTML = '<p style="color:var(--muted)">Belum ada wisudawan.</p>';
-          return;
+    (function () {
+      const cv = document.getElementById('stars');
+      const cx = cv.getContext('2d');
+      let stars = [];
+      function resize() {
+        cv.width = innerWidth * devicePixelRatio; cv.height = innerHeight * devicePixelRatio;
+        cv.style.width = innerWidth + 'px'; cv.style.height = innerHeight + 'px';
+        stars = Array.from({ length: 100 }, () => ({
+          x: Math.random()*cv.width, y: Math.random()*cv.height, r: Math.random()*1.5+0.3,
+          a: Math.random()*0.6+0.15, v: Math.random()*0.25+0.05,
+        }));
+      }
+      function draw() {
+        cx.clearRect(0,0,cv.width,cv.height);
+        for (const s of stars) {
+          cx.beginPath(); cx.arc(s.x, s.y, s.r*devicePixelRatio, 0, Math.PI*2);
+          cx.fillStyle = `rgba(232,202,139,${s.a})`; cx.fill();
+          s.y += s.v*devicePixelRatio;
+          if (s.y > cv.height) { s.y = 0; s.x = Math.random()*cv.width; }
         }
-        list.innerHTML = items.map(g => `
-          <a href="./u/${g.slug}">
-            <b>${g.full_name}</b>
-            <small>${g.major || ''}${g.university ? ' · ' + g.university : ''}</small>
-          </a>
-        `).join('');
-      })
-      .catch(() => {
-        document.getElementById('list').innerHTML =
-          '<p style="color:var(--muted)">Gagal memuat data wisudawan.</p>';
-      });
+        requestAnimationFrame(draw);
+      }
+      addEventListener('resize', resize); resize(); draw();
+    })();
   </script>
 </body>
 </html>
