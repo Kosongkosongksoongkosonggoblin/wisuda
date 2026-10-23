@@ -298,3 +298,44 @@ h2 em{color:var(--gold)}
 @keyframes fadeUpAnim {
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* =========================================
+   DESAIN TOMBOL MUSIK MELAYANG
+   ========================================= */
+.music-btn {
+  position: fixed;
+  bottom: 25px;
+  left: 30px; /* Posisi di kiri bawah agar tidak menabrak tombol panah */
+  z-index: 999;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(232, 202, 139, 0.4);
+  color: var(--gold);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s;
+  backdrop-filter: blur(10px);
+}
+.music-btn:hover {
+  background: var(--gold);
+  color: #111;
+  transform: scale(1.1);
+}
+/* Animasi berputar saat musik menyala */
+.music-btn.playing .music-icon {
+  display: inline-block;
+  animation: spin 3s linear infinite;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+@media(max-width: 760px) {
+  .music-btn {
+    bottom: 20px;
+    left: 20px; /* Sesuaikan posisi di HP */
+  }
+}
