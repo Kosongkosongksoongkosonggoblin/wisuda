@@ -150,7 +150,7 @@ document.addEventListener('mousemove', (e) => {
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
   // Lagu Piano Instrumental dari Pixabay (Bebas Hak Cipta)
-  const audio = new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=wistful-harp-10784.mp3');
+  const audio = new Audio('https://archive.org/download/matthew-c-wright-504-dewdrops-with-ocean-waves/Dewdrops%20%28with%20Ocean%20Waves%29.mp3');
   audio.loop = true;
   audio.volume = 0.4;
 
