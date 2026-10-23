@@ -277,7 +277,7 @@ function initMusic() {
 }
 
 // ==========================================
-// LOGIKA NAVIGASI SLIDE (FIXED)
+// LOGIKA NAVIGASI SLIDE (BEBAS BLUR)
 // ==========================================
 (function initSlides() {
   const slides = document.querySelectorAll('.slide');
@@ -292,19 +292,23 @@ function initMusic() {
     // Tampilkan slide saat ini
     slides[index].classList.add('active');
     
-    // Paksa semua elemen di dalam slide untuk langsung terlihat (anti-blur/blank)
-    const elements = slides[index].querySelectorAll('.reveal');
-    elements.forEach(el => {
-      // Hapus class visible lama jika ada
-      el.classList.remove('visible');
-      
-      // Gunakan setTimeout kecil agar browser sempat me-render ulang sebelum animasi masuk
-      setTimeout(() => {
-        el.classList.add('visible');
-      }, 100);
-    });
+    // Ambil semua elemen .reveal di slide ini
+    const reveals = slides[index].querySelectorAll('.reveal');
+    
+    // Hapus class 'visible' agar animasi ter-reset
+    reveals.forEach(el => el.classList.remove('visible'));
 
-    // Atur status tombol
+    // Pancing class 'visible' agar animasi CSS (fade-up) berjalan
+    setTimeout(() => {
+      reveals.forEach((el, i) => {
+        // Efek Stagger: beri jeda antar elemen agar muncul bergantian
+        setTimeout(() => {
+          el.classList.add('visible');
+        }, i * 100);
+      });
+    }, 50);
+
+    // Atur status tombol panah
     if (btnPrev) btnPrev.disabled = index === 0;
     if (btnNext) btnNext.disabled = index === slides.length - 1;
   }
