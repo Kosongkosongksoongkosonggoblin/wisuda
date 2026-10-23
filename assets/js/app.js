@@ -62,7 +62,7 @@ const dataWishes = [
   let slug = parts[parts.length - 1].replace('.html', ''); 
   
   if (!slug || slug === 'u') {
-    slug = 'rud-tuakia'; 
+    slug = 'undangan'; 
   }
 
   const grad = dataGraduates[slug];
@@ -89,7 +89,6 @@ const dataWishes = [
     if (t) t.innerHTML =
       `${escapeHtml(grad.hero_title_line1)}<br>${escapeHtml(grad.hero_title_line2 || '')} <em>${escapeHtml(grad.hero_title_em || '')}</em>`;
   }
-  setText('gradName', `${grad.full_name} · UNDANGAN WISUDA DIGITAL`);
   setText('footerName', grad.full_name);
   if (grad.quote) setText('detailDesc', grad.quote);
 
@@ -276,35 +275,48 @@ function initMusic() {
 
   document.addEventListener('click', start, { once: true });
   document.addEventListener('touchstart', start, { once: true });
-  document.addEventListener('scroll', start, { once: true });
 }
 
 // ==========================================
-// EFEK SCROLL MODERN (SMOOTH & REVEAL STAGGER)
+// LOGIKA NAVIGASI SLIDE (KLIK PANAH)
 // ==========================================
-(function initSmoothScroll() {
-  // 1. Efek Smooth Scroll
-  document.documentElement.style.scrollBehavior = 'smooth';
+(function initSlides() {
+  const slides = document.querySelectorAll('.slide');
+  const btnNext = document.getElementById('btnNext');
+  const btnPrev = document.getElementById('btnPrev');
+  let currentSlide = 0;
 
-  // 2. Efek Reveal (Intersection Observer dengan Stagger)
-  const revealElements = document.querySelectorAll('.reveal');
-  
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
-      if (entry.isIntersecting) {
-        // Efek Stagger: Muncul bergantian dengan jeda 100ms
-        setTimeout(() => {
-          entry.target.classList.add('visible');
-        }, index * 100); 
-        
-        // Hentikan observasi setelah elemen muncul
-        observer.unobserve(entry.target);
+  function showSlide(index) {
+    // Sembunyikan semua slide
+    slides.forEach(s => s.classList.remove('active', 'prev'));
+    
+    // Tampilkan slide saat ini
+    slides[index].classList.add('active');
+    
+    // Atur status tombol (disabled jika di ujung)
+    if (btnPrev) btnPrev.disabled = index === 0;
+    if (btnNext) btnNext.disabled = index === slides.length - 1;
+  }
+
+  if (btnNext && btnPrev) {
+    btnNext.addEventListener('click', () => {
+      if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        showSlide(currentSlide);
       }
     });
-  }, {
-    threshold: 0.15, 
-    rootMargin: "0px 0px -50px 0px" 
-  });
 
-  revealElements.forEach(el => observer.observe(el));
+    btnPrev.addEventListener('click', () => {
+      if (currentSlide > 0) {
+        currentSlide--;
+        showSlide(currentSlide);
+      }
+    });
+
+    // Kontrol via keyboard (opsional)
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') btnNext.click();
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') btnPrev.click();
+    });
+  }
 })();
