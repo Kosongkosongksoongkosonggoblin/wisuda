@@ -51,6 +51,24 @@ document.addEventListener('DOMContentLoaded', () => {
   if ($('heroLead')) setText('heroLead', grad.hero_lead);
   if ($('heroTitle')) $('heroTitle').innerHTML = `${grad.hero_title_line1}<br>${grad.hero_title_line2} <em>${grad.hero_title_em}</em>`;
 
+  // --- FITUR NAMA TAMU OTOMATIS (?to=Nama) ---
+  const guestName = new URLSearchParams(location.search).get('to');
+  if (guestName) {
+    const wrap = $('greetWrap');
+    if (wrap) {
+      const badge = document.createElement('div');
+      badge.className = 'greet-badge';
+      // Style inline agar pasti muncul meski CSS terpisah
+      badge.style.cssText = "display:inline-block; padding:8px 18px; margin-bottom:10px; border:1px solid #8ba0ff55; border-radius:999px; background:#8ba0ff15; color:#b8c4ff; font-size:.78rem; letter-spacing:.15em; text-transform:uppercase; font-weight:700;";
+      badge.textContent = `Halo, ${guestName} ✦`;
+      wrap.appendChild(badge);
+    }
+    
+    // Isi otomatis nama di form RSVP
+    const namaInput = $('nama');
+    if (namaInput) namaInput.value = guestName;
+  }
+
   // Isi Tanggal & Waktu
   const date = new Date(grad.graduation_date);
   const dayNum = String(date.getDate()).padStart(2, '0');
@@ -62,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if ($('gradMonth')) setText('gradMonth', monthYear);
   if ($('gradTime')) setText('gradTime', `${dayName} · ${timeStr} WIB – SELESAI`);
   
-  // Isi Kotak Waktu (Memperbaiki tulisan "Memuat...")
+  // Isi Kotak Waktu
   if ($('cardTime')) setText('cardTime', `${dayName.toLowerCase().replace(/^\w/, c => c.toUpperCase())}, ${date.getDate()} ${monthYear.toLowerCase()}\nMulai pukul ${timeStr} WIB`);
 
   // Isi Lokasi & Dress Code
@@ -110,6 +128,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (btnNext) btnNext.addEventListener('click', () => { if (currentSlide < slides.length - 1) showSlide(++currentSlide); });
   if (btnPrev) btnPrev.addEventListener('click', () => { if (currentSlide > 0) showSlide(--currentSlide); });
+
+  // Form RSVP ke WhatsApp
+  const form = $('rsvpForm');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nama = $('nama').value.trim();
+      const hadir = $('hadir').value;
+      const pesan = $('pesan').value.trim();
+      if (!nama) return alert('Nama wajib diisi.');
+
+      const msg = `Halo, saya ${nama}.\nKonfirmasi wisuda ${grad.full_name}: ${hadir}.`
+                + (pesan ? `\n\nUcapan: ${pesan}` : '')
+                + `\n\n— dikirim dari undangan digital`;
+
+      const wa = (grad.whatsapp_number || '6281234567890').replace(/\D/g, '');
+      window.open(`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+    });
+  }
 });
 
 // ============================================================
@@ -145,7 +182,6 @@ document.addEventListener('mousemove', (e) => {
 // 4. MUSIK (LINK DARI ANDA)
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
-  // Link MP3 dari Internet Archive
   const audio = new Audio('https://dn711105.ca.archive.org/0/items/matthew-c-wright-504-dewdrops-with-ocean-waves/Dewdrops%20%28with%20Ocean%20Waves%29.mp3');
   audio.loop = true;
   audio.volume = 0.5; 
