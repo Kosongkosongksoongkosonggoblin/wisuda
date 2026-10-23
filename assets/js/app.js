@@ -116,7 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // 3. EFEK KURSOR 3D TILT (INTERAKTIF)
 // ============================================================
 document.addEventListener('mousemove', (e) => {
-  // Hanya jalan di layar laptop/PC (bukan HP)
   if (window.innerWidth < 760) return;
 
   document.querySelectorAll('.card').forEach(card => {
@@ -124,12 +123,10 @@ document.addEventListener('mousemove', (e) => {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     
-    // Jika kursor berada di atas kartu
     if (x > 0 && x < rect.width && y > 0 && y < rect.height) {
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
       
-      // Hitung derajat kemiringan
       const rotateX = ((y - centerY) / centerY) * -10; 
       const rotateY = ((x - centerX) / centerX) * 10;
       
@@ -137,7 +134,6 @@ document.addEventListener('mousemove', (e) => {
       card.style.boxShadow = `0 20px 40px rgba(232, 202, 139, 0.2)`;
       card.style.borderColor = `rgba(232, 202, 139, 0.5)`;
     } else {
-      // Kembalikan ke posisi semula
       card.style.transform = `perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)`;
       card.style.boxShadow = `none`;
       card.style.borderColor = `rgba(255, 255, 255, 0.1)`;
@@ -145,14 +141,14 @@ document.addEventListener('mousemove', (e) => {
   });
 });
 
-// ==========================================
-// MUSIK (LINK LANGSUNG DARI ANDA)
-// ==========================================
+// ============================================================
+// 4. MUSIK (LINK DARI ANDA)
+// ============================================================
 document.addEventListener('DOMContentLoaded', () => {
   // Link MP3 dari Internet Archive
   const audio = new Audio('https://dn711105.ca.archive.org/0/items/matthew-c-wright-504-dewdrops-with-ocean-waves/Dewdrops%20%28with%20Ocean%20Waves%29.mp3');
   audio.loop = true;
-  audio.volume = 0.5; // Volume 50% agar tidak terlalu keras
+  audio.volume = 0.5; 
 
   const btn = document.getElementById('musicBtn');
   
@@ -163,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
           btn.classList.add('playing');
         }).catch((err) => {
           console.log('Gagal memutar musik:', err);
-          alert('Browser memblokir musik. Coba klik sekali lagi.');
+          alert('Browser memblokir musik. Silakan klik sekali lagi.');
         });
       } else {
         audio.pause();
