@@ -145,22 +145,26 @@ document.addEventListener('mousemove', (e) => {
   });
 });
 
-// ============================================================
-// 4. MUSIK (MP3 DARI URL & TOMBOL KONTROL)
-// ============================================================
+// ==========================================
+// MUSIK (LINK LANGSUNG DARI ANDA)
+// ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-  // Lagu Piano Instrumental dari Pixabay (Bebas Hak Cipta)
-  const audio = new Audio('https://archive.org/download/matthew-c-wright-504-dewdrops-with-ocean-waves/Dewdrops%20%28with%20Ocean%20Waves%29.mp3');
+  // Link MP3 dari Internet Archive
+  const audio = new Audio('https://dn711105.ca.archive.org/0/items/matthew-c-wright-504-dewdrops-with-ocean-waves/Dewdrops%20%28with%20Ocean%20Waves%29.mp3');
   audio.loop = true;
-  audio.volume = 0.4;
+  audio.volume = 0.5; // Volume 50% agar tidak terlalu keras
 
   const btn = document.getElementById('musicBtn');
   
   if (btn) {
     btn.addEventListener('click', () => {
       if (audio.paused) {
-        audio.play();
-        btn.classList.add('playing');
+        audio.play().then(() => {
+          btn.classList.add('playing');
+        }).catch((err) => {
+          console.log('Gagal memutar musik:', err);
+          alert('Browser memblokir musik. Coba klik sekali lagi.');
+        });
       } else {
         audio.pause();
         btn.classList.remove('playing');
