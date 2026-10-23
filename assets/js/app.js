@@ -39,60 +39,56 @@ const dataWishes = [
 
   document.title = `Undangan Wisuda — ${grad.full_name}`;
 
-  // Isi Data
+  // Isi Data Teks
   setText('heroKicker', grad.hero_kicker);
   setText('heroLead', grad.hero_lead);
   $('heroTitle').innerHTML = `${grad.hero_title_line1}<br>${grad.hero_title_line2} <em>${grad.hero_title_em}</em>`;
 
+  // Isi Data Tanggal & Waktu
   const date = new Date(grad.graduation_date);
-  setText('gradDay', String(date.getDate()).padStart(2, '0'));
-  setText('gradMonth', date.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' }).toUpperCase());
-  setText('gradTime', date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }).replace(':', '.') + " WIB");
+  const dayNum = String(date.getDate()).padStart(2, '0');
+  const monthYear = date.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' }).toUpperCase();
+  const dayName = date.toLocaleDateString('id-ID', { weekday: 'long' }).toUpperCase();
+  const timeStr = date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }).replace(':', '.');
 
+  setText('gradDay', dayNum);
+  setText('gradMonth', monthYear);
+  setText('gradTime', `${dayName} · ${timeStr} WIB – SELESAI`);
+  
+  // Ini yang mengisi tulisan "Memuat..." menjadi Waktu
+  setText('cardTime', `${dayName.toLowerCase().replace(/^\w/, c => c.toUpperCase())}, ${date.getDate()} ${monthYear.toLowerCase()}\nMulai pukul ${timeStr} WIB`);
+
+  // Isi Data Lokasi
   setText('cardVenue', grad.venue_name);
   setText('venueName', grad.venue_name);
   setText('venueAddress', grad.venue_address);
   $('mapsBtn').href = grad.maps_url;
+  setText('cardDress', grad.dress_code);
 
+  // Isi Timeline
   $('timeline').innerHTML = grad.schedules.map(s => `
     <div class="event"><time>${s.time}</time><div><b>${s.title}</b><p>${s.desc}</p></div></div>
   `).join('');
 
+  // Isi Galeri
   $('galleryList').innerHTML = grad.galleries.map(g => `
     <figure class="card"><img src="${g.url}"><figcaption>${g.caption}</figcaption></figure>
   `).join('');
 
+  // Isi Ucapan
   $('wishesList').innerHTML = dataWishes.map(w => `
     <article class="card"><p>"${w.message}"</p><p style="color:var(--gold)">— ${w.name}</p></article>
   `).join('');
 
-  // Navigasi Slide & Animasi
+  // --- LOGIKA NAVIGASI SLIDE ---
   const slides = document.querySelectorAll('.slide');
   const btnNext = $('btnNext');
   const btnPrev = $('btnPrev');
   let currentSlide = 0;
 
   function showSlide(index) {
-    // Sembunyikan semua slide
     slides.forEach(s => s.classList.remove('active'));
-    // Tampilkan slide yang aktif
     slides[index].classList.add('active');
-
-    // Animasi untuk elemen di dalam slide
-    const elements = slides[index].querySelectorAll('.slide-content > *');
-    elements.forEach((el, i) => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(30px)';
-      el.style.transition = 'none';
-      
-      setTimeout(() => {
-        el.style.transition = `opacity 0.6s ease, transform 0.6s ease`;
-        el.style.transitionDelay = `${i * 0.1}s`; // Efek muncul bergantian
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
-      }, 50);
-    });
-
     if (btnPrev) btnPrev.disabled = index === 0;
     if (btnNext) btnNext.disabled = index === slides.length - 1;
   }
@@ -102,12 +98,7 @@ const dataWishes = [
   if (btnNext) btnNext.addEventListener('click', () => { if (currentSlide < slides.length - 1) showSlide(++currentSlide); });
   if (btnPrev) btnPrev.addEventListener('click', () => { if (currentSlide > 0) showSlide(--currentSlide); });
 
-  // === MUSIK (AUTOPLAY SAAT DISENTUH) ===
-  initMusic();
-})();
-
-// Fungsi Musik Sintesis (Lagu Ambient)
-function initMusic() {
+  // --- MUSIK ---
   let ac = null, gain = null, playing = false, loop = null, idx = 0;
   const notes = [261.63,329.63,392,493.88,392,329.63,293.66,349.23,440,523.25,440,349.23];
 
@@ -132,7 +123,7 @@ function initMusic() {
     idx++;
   }
 
-  async function start() {
+  async function startMusic() {
     try {
       const AC = window.AudioContext || window.webkitAudioContext;
       if (!AC) return;
@@ -140,7 +131,7 @@ function initMusic() {
       await ac.resume();
       if (playing) return;
       gain = ac.createGain();
-      gain.gain.value = 0.5; // Volume Musik (0.0 - 1.0)
+      gain.gain.value = 0.5;
       gain.connect(ac.destination);
       playing = true;
       tick();
@@ -150,7 +141,6 @@ function initMusic() {
     }
   }
 
-  // Nyalakan musik otomatis saat tamu mengklik atau menyentuh layar
-  document.addEventListener('click', start, { once: true });
-  document.addEventListener('touchstart', start, { once: true });
-}
+  document.addEventListener('click', startMusic, { once: true });
+  document.addEventListener('touchstart', startMusic, { once: true });
+})();
