@@ -76,7 +76,7 @@ canvas#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
   height: 440px; 
   background: transparent;
   z-index: 2;
-  animation: floatPhoto 6s ease-in-out infinite; 
+  animation: floatPhoto 6s ease-in-out infinite, zoomIn 1.5s ease-out forwards;
 }
 .hero-photo {
   width: 100%;
@@ -99,6 +99,11 @@ canvas#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
 .date{
   display:inline-flex;align-items:center;gap:25px;margin:32px 0;padding:20px 28px;
   border:1px solid #c3a56a;border-radius:18px;background:#fff9;box-shadow:0 20px 55px #201b120d;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+}
+.date:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.1);
 }
 .date strong{font:3rem 'Playfair Display',serif;color:#a77b36}
 .date div{text-align:left;font-size:.82rem;line-height:1.6;letter-spacing:.06em}
@@ -108,9 +113,14 @@ canvas#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
 .card{
   padding:28px;border-radius:22px;background:linear-gradient(145deg,#ffffff0e,#ffffff04);
   border:1px solid var(--line);text-align:left;transform-style:preserve-3d;
-  transition:transform .2s ease,border-color .3s;box-shadow:0 20px 45px #0002;
+  box-shadow:0 20px 45px #0002;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease;
 }
-.card:hover{border-color:#e8ca8b75}
+.card:hover{
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 20px rgba(232, 202, 139, 0.15);
+  border-color: rgba(232, 202, 139, 0.5);
+}
 .light .card{background:#fff;border-color:#e7dfcf;box-shadow:0 18px 40px #25243a0d}
 .card .ico{font-size:1.65rem}
 .card h3{margin:15px 0 8px}
@@ -119,8 +129,16 @@ canvas#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
 
 /* TIMELINE */
 .timeline{max-width:720px;margin:42px auto 0;text-align:left}
-.event{display:grid;grid-template-columns:120px 1fr;gap:20px;padding:22px 0;border-bottom:1px solid var(--line)}
-.event time{color:var(--gold);font-weight:700}
+.event{
+  display:grid;grid-template-columns:120px 1fr;gap:20px;padding:22px 0;border-bottom:1px solid var(--line);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.event:hover {
+  transform: translateX(10px);
+  border-bottom-color: var(--gold);
+}
+.event time{color:var(--gold);font-weight:700;transition: text-shadow 0.3s ease;}
+.event:hover time{text-shadow: 0 0 10px var(--gold);}
 .event p{color:var(--muted);margin:4px 0 0}
 .light .event{border-color:#ded6c7}
 .light .event p{color:#777787}
@@ -130,6 +148,11 @@ canvas#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
   max-width:700px;margin:32px auto;padding:35px;border-radius:26px;
   background:linear-gradient(140deg,#202944,#101526);border:1px solid #ffffff20;
   box-shadow:0 30px 80px #0003;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+}
+.mapcard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 20px rgba(232, 202, 139, 0.15);
 }
 .mapcard .pin{font-size:2.3rem}
 .mapcard h3{margin:12px 0 8px}
@@ -163,22 +186,11 @@ canvas#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
   color: #94a3b8 !important; 
 }
 
-/* FOOTER & MUSIC */
+/* FOOTER */
 .footer{text-align:center;padding:55px 0;color:#969eb8}
 .footer strong{color:var(--gold)}
-.music{
-  position:fixed;z-index:10;right:20px;bottom:20px;border-radius:999px;
-  border:1px solid #ffffff2c;background:#151a2fef;color:white;padding:13px 18px;
-  cursor:pointer;box-shadow:0 12px 35px #0005;backdrop-filter:blur(15px);
-}
-.music b{color:var(--gold)}
-.music .pulse{display:inline-block;width:7px;height:7px;border-radius:50%;
-  background:#d4a85e;margin-right:7px}
-.music.on .pulse{animation:pulse 1s infinite}
 
-/* ANIMASI & REVEAL */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
+/* GREETING BADGE */
 .greet-badge{
   display:inline-block;padding:8px 18px;margin-bottom:10px;
   border:1px solid #8ba0ff55;border-radius:999px;background:#8ba0ff15;
@@ -208,99 +220,60 @@ canvas#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
 #wishesList .card{transition:transform .3s,border-color .3s}
 #wishesList .card:hover{transform:translateY(-4px);border-color:#e8ca8b75}
 
+/* ANIMASI REVEAL (EFEK SCROLL PREMIUM) */
+.reveal {
+  opacity: 0;
+  transform: translateY(60px) scale(0.95);
+  filter: blur(10px);
+  transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
 /* KEYFRAMES */
 @keyframes floatPhoto {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-15px); }
 }
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.8) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
 @keyframes orbit{to{transform:rotateX(68deg) rotateZ(340deg)}}
 @keyframes pulse{50%{box-shadow:0 0 0 7px #e8ca8b22}}
 
 /* =========================================
-   MEDIA QUERY (TAMPILAN HP) - SANGAT KETAT
+   MEDIA QUERY (TAMPILAN HP)
    ========================================= */
 @media(max-width:760px){
-  /* Navbar */
   .nav{flex-direction:column;gap:15px;text-align:center}
   .nav nav{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:10px}
   .nav a{margin-left:0;font-size:.8rem}
   
-  /* Hero Section */
   .hero{grid-template-columns:1fr;text-align:center;padding-top:20px;padding-bottom:30px;gap:0}
   .hero h1{font-size:clamp(2.5rem,12vw,3.5rem);letter-spacing:-.03em;margin:15px 0}
   .lead{margin:0 auto;font-size:.95rem;padding:0 15px}
   .actions{justify-content:center;flex-direction:column;width:100%;padding:0 20px}
   .btn{width:100%;justify-content:center}
   
-  /* Foto Profil */
   .photo-frame{width:200px;height:300px;margin:30px auto 10px auto}
   .glass{bottom:-10px;font-size:.65rem}
   
-  /* Cards & Grid */
   .cards{grid-template-columns:1fr;padding:0 15px}
   
-  /* Tanggal */
   .date{flex-direction:column;gap:10px;padding:15px;width:90%;margin:20px auto}
   .date div{text-align:center;font-size:.9rem}
   
-  /* Countdown */
   .countdown{grid-template-columns:repeat(2,1fr);padding:0 15px;gap:10px}
   
-  /* Timeline Acara */
   .timeline{padding:0 15px}
   .event{grid-template-columns:1fr;gap:5px;text-align:left;padding:15px 0}
   
-  /* Form RSVP */
   .form{padding:0 15px}
-  
-  /* Section Padding */
   .section{padding:60px 0}
   .section h2{font-size:2.2rem}
-}
-
-/* =========================================
-   EFEK SCROLL MODERN (FADE, UP, & GLOW)
-   ========================================= */
-
-/* 1. Efek Reveal (Muncul dari bawah) */
-.reveal {
-  opacity: 0;
-  transform: translateY(50px);
-  transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), 
-              transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
-  will-change: opacity, transform;
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* 2. Efek Kartu 3D yang Menyala saat di-hover */
-.card, .mapcard, .date {
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), 
-              box-shadow 0.4s ease, 
-              border-color 0.4s ease;
-}
-.card:hover, .mapcard:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 20px rgba(232, 202, 139, 0.15); /* Efek Glow Emas */
-  border-color: rgba(232, 202, 139, 0.5);
-}
-
-/* 3. Efek Timeline Bergeser */
-.event {
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-.event:hover {
-  transform: translateX(10px);
-  border-color: var(--gold);
-}
-
-/* 4. Animasi Foto Masuk */
-.photo-frame {
-  animation: floatPhoto 6s ease-in-out infinite, zoomIn 1.5s ease-out forwards;
-}
-@keyframes zoomIn {
-  from { opacity: 0; transform: scale(0.8) translateY(20px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
 }
