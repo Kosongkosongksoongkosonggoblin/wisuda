@@ -11,27 +11,24 @@
 <body>
 <canvas id="stars"></canvas>
 
-<!-- SLIDE 1: HERO / PEMBUKA -->
+<!-- SLIDE 1: HERO -->
 <section class="slide active" id="slide-1">
   <div class="slide-content hero-layout">
     <div style="text-align: left; position: relative; z-index: 5;">
-      <div class="kicker reveal" id="heroKicker">A new chapter begins · 2026</div>
+      <div class="kicker" id="heroKicker">A new chapter begins · 2026</div>
       <div id="greetWrap"></div>
-      <h1 class="reveal" id="heroTitle">Made for<br>this <em>moment.</em></h1>
-      <p class="lead reveal" id="heroLead">Sebuah perjalanan, ribuan cerita, dan satu pencapaian yang layak dirayakan.</p>
+      <h1 id="heroTitle">Made for<br>this <em>moment.</em></h1>
+      <p class="lead" id="heroLead">Sebuah perjalanan, ribuan cerita, dan satu pencapaian yang layak dirayakan.</p>
       
-      <!-- NAMA PINDAH KE SINI (KIRI BAWAH) -->
-      <div class="name-tag reveal">
+      <div class="name-tag">
         <span class="line"></span>
         <span class="name-text">RUDI TUAKIA, ST</span>
       </div>
     </div>
 
-    <div class="stage reveal">
+    <div class="stage">
       <div class="orbit"><i class="orb"></i></div>
       <div class="orbit two"><i class="orb blue"></i></div>
-      
-      <!-- Efek Cahaya Aurora di Belakang Foto -->
       <div class="glow-effect"></div>
       
       <div class="photo-frame">
@@ -41,14 +38,14 @@
   </div>
 </section>
 
-<!-- SLIDE 2: TANGGAL & DETAIL -->
+<!-- SLIDE 2: DETAIL -->
 <section class="slide" id="slide-2">
   <div class="slide-content">
-    <div class="kicker reveal">The celebration</div>
-    <h2 class="reveal">Satu babak selesai.<br><em>Babak baru dimulai.</em></h2>
-    <p class="desc reveal" id="detailDesc">Setiap langkah kecil membawa kami ke momen besar ini.</p>
+    <div class="kicker">The celebration</div>
+    <h2>Satu babak selesai.<br><em>Babak baru dimulai.</em></h2>
+    <p class="desc" id="detailDesc">Setiap langkah kecil membawa kami ke momen besar ini.</p>
 
-    <div class="date reveal">
+    <div class="date">
       <strong id="gradDay">24</strong>
       <div>
         <b id="gradMonth">OKTOBER 2026</b><br>
@@ -56,55 +53,47 @@
       </div>
     </div>
 
-    <div class="countdown reveal" id="countdown" aria-live="polite"></div>
+    <div class="countdown" id="countdown"></div>
     
-    <div class="cards reveal">
-      <article class="card tilt">
-        <div class="ico">◷</div>
-        <h3>Waktu</h3>
-        <p id="cardTime">Memuat...</p>
+    <div class="cards">
+      <article class="card">
+        <div class="ico">◷</div><h3>Waktu</h3><p id="cardTime">Memuat...</p>
       </article>
-      <article class="card tilt">
-        <div class="ico">⌖</div>
-        <h3>Lokasi</h3>
-        <p id="cardVenue">Memuat...</p>
+      <article class="card">
+        <div class="ico">⌖</div><h3>Lokasi</h3><p id="cardVenue">Memuat...</p>
       </article>
-      <article class="card tilt">
-        <div class="ico">✧</div>
-        <h3>Dress code</h3>
-        <p id="cardDress">Formal modern</p>
+      <article class="card">
+        <div class="ico">✧</div><h3>Dress code</h3><p id="cardDress">Formal modern</p>
       </article>
     </div>
   </div>
 </section>
 
-<!-- SLIDE 3: TIMELINE ACARA -->
+<!-- SLIDE 3: TIMELINE -->
 <section class="slide" id="slide-3">
   <div class="slide-content">
-    <div class="kicker reveal">The timeline</div>
-    <h2 class="reveal">Hari yang istimewa.</h2>
-    <p class="desc reveal">Simpan jadwal ini dan mari rayakan setiap pencapaian bersama.</p>
-    <!-- Menghapus inline style agar rapi sesuai CSS -->
-    <div class="timeline reveal" id="timeline"></div>
+    <div class="kicker">The timeline</div>
+    <h2>Hari yang istimewa.</h2>
+    <p class="desc">Simpan jadwal ini dan mari rayakan setiap pencapaian bersama.</p>
+    <div class="timeline" id="timeline"></div>
   </div>
 </section>
 
 <!-- SLIDE 4: GALERI -->
 <section class="slide" id="slide-4">
   <div class="slide-content">
-    <div class="kicker reveal">Journey</div>
-    <h2 class="reveal">Kenangan <em>bersama.</em></h2>
-    <div class="cards reveal" id="galleryList"></div>
+    <div class="kicker">Journey</div>
+    <h2>Kenangan <em>bersama.</em></h2>
+    <div class="cards" id="galleryList"></div>
   </div>
 </section>
 
-<!-- SLIDE 5: LOKASI MAPS -->
+<!-- SLIDE 5: MAPS -->
 <section class="slide" id="slide-5">
   <div class="slide-content">
-    <div class="kicker reveal">Find the venue</div>
-    <h2 class="reveal">See you <em>there.</em></h2>
-    
-    <div class="map-wrapper reveal">
+    <div class="kicker">Find the venue</div>
+    <h2>See you <em>there.</em></h2>
+    <div class="map-wrapper">
       <iframe 
         id="googleMapsIframe"
         src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d497.69684017904086!2d128.19131893598572!3d-3.683785226652667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zM8KwNDEnMDIuMSJTIDEyOMKwMTEnMjkuMiJF!5e0!3m2!1sid!2sid!4v1792718671205!5m2!1sid!2sid" 
@@ -115,34 +104,30 @@
         <div class="pin">⌖</div>
         <h3 id="venueName">Tempat perayaan</h3>
         <p id="venueAddress">—</p>
-        <a class="btn" id="mapsBtn" target="_blank" rel="noopener" href="#">
-          Buka di Google Maps ↗
-        </a>
+        <a class="btn" id="mapsBtn" target="_blank" rel="noopener" href="#">Buka di Google Maps ↗</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SLIDE 6: WALL OF WISHES -->
+<!-- SLIDE 6: WISHES -->
 <section class="slide" id="slide-6">
   <div class="slide-content">
-    <div class="kicker reveal">Wall of wishes</div>
-    <h2 class="reveal">Kata <em>mereka.</em></h2>
-    <p class="desc reveal">Ucapan dan doa dari orang-orang terkasih.</p>
-    <div class="cards reveal" id="wishesList"></div>
+    <div class="kicker">Wall of wishes</div>
+    <h2>Kata <em>mereka.</em></h2>
+    <p class="desc">Ucapan dan doa dari orang-orang terkasih.</p>
+    <div class="cards" id="wishesList"></div>
   </div>
 </section>
 
 <!-- SLIDE 7: RSVP -->
 <section class="slide" id="slide-7">
   <div class="slide-content">
-    <div class="kicker reveal">Kindly respond</div>
-    <h2 class="reveal">Can you <em>make it?</em></h2>
-    <p class="desc reveal">Mohon konfirmasi kehadiran Anda. Kami tak sabar merayakan momen ini bersama Anda.</p>
+    <div class="kicker">Kindly respond</div>
+    <h2>Can you <em>make it?</em></h2>
+    <p class="desc">Mohon konfirmasi kehadiran Anda. Kami tak sabar merayakan momen ini bersama Anda.</p>
     
-    <!-- Menghapus inline style form agar sesuai dengan CSS yang sudah dibuat -->
-    <form class="form reveal" id="rsvpForm" style="max-width: 500px; width: 100%; margin-top: 20px; text-align: left;">
-      
+    <form class="form" id="rsvpForm" style="max-width: 500px; width: 100%; margin-top: 20px; text-align: left;">
       <label for="nama" style="color: var(--muted); font-size: 0.9rem; margin-bottom: 5px; display: block;">Nama lengkap</label>
       <input id="nama" required placeholder="Nama Anda" style="width:100%; margin-bottom:15px; padding:12px; border-radius:10px; border:1px solid var(--line); background:#ffffff0a; color:white;">
       
@@ -156,12 +141,11 @@
       <textarea id="pesan" placeholder="Tuliskan pesan hangat..." style="width:100%; margin-bottom:20px; padding:12px; border-radius:10px; border:1px solid var(--line); background:#ffffff0a; color:white; min-height: 80px;"></textarea>
       
       <button class="btn" type="submit" style="width:100%; justify-content:center;">Kirim RSVP via WhatsApp ↗</button>
-      <p class="note" style="text-align: center; margin-top: 15px; font-size: 0.8rem; color: var(--muted);">Data akan dikirim melalui WhatsApp.</p>
     </form>
   </div>
 </section>
 
-<!-- TOMBOL PANAH NAVIGASI -->
+<!-- TOMBOL PANAH -->
 <div class="nav-controls">
   <button class="nav-btn" id="btnPrev" disabled>←</button>
   <button class="nav-btn" id="btnNext">→</button>
