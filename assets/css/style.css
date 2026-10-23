@@ -88,12 +88,40 @@ h2 em{color:var(--gold)}
 }
 .btn:hover{transform:translateY(-3px);box-shadow:0 15px 45px #d6b26c55}
 
-/* Foto Profil (Hero) */
-.stage{position:relative;display:flex;justify-content:center;align-items:center;}
-.orbit{position:absolute;width:370px;height:370px;border:1px solid #e8ca8b40;border-radius:50%;transform:rotateX(68deg) rotateZ(-20deg);animation:orbit 16s linear infinite;}
-.orbit.two{width:300px;height:300px;border-color:#8ba0ff45;animation-duration:12s;animation-direction:reverse}
+/* =========================================
+   HERO: FOTO & ORBIT TATA SURYA
+   ========================================= */
+.stage{
+  position: relative; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  height: 480px;
+}
+
+/* Animasi Garis Orbit */
+.orbit{
+  position: absolute; width: 370px; height: 370px; border: 1px solid #e8ca8b40;
+  border-radius: 50%; transform: rotateX(68deg) rotateZ(-20deg);
+  animation: orbit 16s linear infinite;
+}
+.orbit.two{
+  width: 300px; height: 300px; border-color: #8ba0ff45;
+  animation-duration: 12s; animation-direction: reverse;
+}
+
+/* Titik Planet (Orb) */
+.orb{
+  position: absolute; width: 13px; height: 13px; border-radius: 50%;
+  background: var(--gold); box-shadow: 0 0 22px var(--gold); top: 12%; left: 22%;
+}
+.orb.blue{
+  background: var(--blue); box-shadow: 0 0 24px var(--blue); top: 78%; left: 80%;
+}
+
+/* Foto Profil */
 .photo-frame {
-  position: relative; width: 300px; height: 460px; margin: 0 auto; z-index: 2;
+  position: relative; width: 280px; height: 440px; z-index: 2;
   animation: floatPhoto 6s ease-in-out infinite;
 }
 .hero-photo {
@@ -114,7 +142,9 @@ h2 em{color:var(--gold)}
 }
 .name-tag .line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, #e8ca8b, transparent); max-width: 80px; }
 
-/* Grid Kartu & Tanggal */
+/* =========================================
+   KARTU, TANGGAL & COUNTDOWN
+   ========================================= */
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;width:100%;margin-top:20px;}
 .card{ padding:20px;border-radius:20px;background:#ffffff0e;border:1px solid var(--line);text-align:left;transition:0.3s; }
 .card h3{margin:10px 0 5px; font-size:1.1rem;}
@@ -124,24 +154,32 @@ h2 em{color:var(--gold)}
 .date strong{font:2.5rem 'Playfair Display',serif;color:#a77b36;}
 .date div{text-align:left;font-size:.8rem;line-height:1.5;}
 
-/* Countdown & Galeri */
 .countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:450px;margin:20px auto 0;}
 .cd-box{padding:15px 5px;border-radius:12px;border:1px solid var(--line);background:#ffffff08;text-align:center;}
 .cd-box b{display:block;font:1.5rem 'Playfair Display',serif;color:var(--gold)}
+
+/* =========================================
+   GALERI, TIMELINE & MAPS
+   ========================================= */
 #galleryList{grid-template-columns:repeat(3,1fr); gap: 15px;}
 #galleryList img{width:100%;height:200px;object-fit:cover;border-radius:15px; transition: 0.3s;}
 #galleryList figure:hover img{transform:scale(1.05)}
 
-/* Timeline */
 .timeline{width: 100%; max-width: 600px; text-align: left;}
 .event{display:grid;grid-template-columns:100px 1fr;gap:15px;padding:15px 0;border-bottom:1px solid var(--line)}
 .event time{color:var(--gold);font-weight:700; font-size: 0.9rem;}
 .event p{color:var(--muted);margin:4px 0 0; font-size: 0.9rem;}
 
-/* Maps */
-.map-wrapper { position: relative; width: 100%; max-width: 700px; height: 350px; border-radius: 20px; overflow: hidden; border: 1px solid var(--line); }
-.map-wrapper iframe { width: 100%; height: 100%; border: 0; }
-.map-info-card { position: absolute; bottom: 15px; left: 15px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px); padding: 15px; border-radius: 15px; text-align: left; width: 280px; border: 1px solid var(--line); }
+.map-wrapper { 
+  position: relative; width: 100%; max-width: 700px; height: 350px; 
+  border-radius: 20px; overflow: hidden; border: 1px solid var(--line); margin-top: 20px;
+}
+.map-wrapper iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.map-info-card { 
+  position: absolute; bottom: 20px; left: 20px; 
+  background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px); 
+  padding: 15px; border-radius: 15px; text-align: left; width: 280px; border: 1px solid var(--line); 
+}
 .map-info-card h3 { font-size: 1rem; margin: 5px 0; }
 .map-info-card p { font-size: 0.8rem; color: var(--muted); margin-bottom: 10px; }
 .map-info-card .btn { padding: 8px 12px; font-size: 0.8rem; width: 100%; justify-content: center; }
@@ -164,7 +202,7 @@ h2 em{color:var(--gold)}
 .nav-btn:disabled { opacity: 0.2; cursor: not-allowed; transform: none; background: rgba(15,23,42,0.7); color: var(--muted); }
 
 /* =========================================
-   ANIMASI REVEAL (EFEK SCROLL PREMIUM)
+   ANIMASI REVEAL (EFEK SLIDE PREMIUM)
    ========================================= */
 .reveal {
   opacity: 0;
@@ -189,7 +227,13 @@ h2 em{color:var(--gold)}
 @media(max-width:760px){
   .hero-layout { grid-template-columns: 1fr; text-align: center; gap: 10px; }
   h1 { font-size: clamp(2.5rem, 10vw, 3.5rem); }
-  .photo-frame { width: 200px; height: 300px; margin: 10px auto; }
+  
+  /* Foto diperkecil di HP */
+  .stage { height: 350px; margin-top: 10px; }
+  .photo-frame { width: 200px; height: 320px; }
+  .orbit { width: 280px; height: 280px; }
+  .orbit.two { width: 220px; height: 220px; }
+  
   .cards { grid-template-columns: 1fr; }
   .countdown { grid-template-columns: repeat(2, 1fr); }
   
@@ -198,6 +242,7 @@ h2 em{color:var(--gold)}
   
   #galleryList { grid-template-columns: 1fr; }
   #galleryList img { height: 150px; }
+  
   .map-wrapper { height: 300px; }
-  .map-info-card { width: calc(100% - 30px); }
+  .map-info-card { width: calc(100% - 30px); left: 15px; bottom: 15px; }
 }
