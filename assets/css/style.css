@@ -246,3 +246,47 @@ h2 em{color:var(--gold)}
   .map-wrapper { height: 300px; }
   .map-info-card { width: calc(100% - 30px); left: 15px; bottom: 15px; }
 }
+
+/* =========================================
+   PERBAIKAN DARURAT UNTUK PETA (SLIDE 5)
+   ========================================= */
+.map-wrapper { 
+  position: relative !important; 
+  width: 100% !important; 
+  max-width: 700px !important; 
+  height: 350px !important; 
+  border-radius: 20px !important; 
+  overflow: hidden !important; 
+  border: 1px solid var(--line) !important; 
+  margin: 20px auto 0 auto !important;
+}
+
+.map-wrapper iframe { 
+  position: absolute !important; 
+  inset: 0 !important; 
+  width: 100% !important; 
+  height: 100% !important; 
+  border: 0 !important; 
+}
+
+.map-info-card { 
+  position: absolute !important; 
+  bottom: 20px !important; 
+  left: 20px !important; 
+  background: rgba(15, 23, 42, 0.85) !important; 
+  backdrop-filter: blur(10px) !important; 
+  padding: 15px !important; 
+  border-radius: 15px !important; 
+  text-align: left !important; 
+  width: 280px !important; 
+  border: 1px solid var(--line) !important; 
+  z-index: 10 !important;
+}
+
+@media(max-width: 760px) {
+  .map-info-card { 
+    width: calc(100% - 40px) !important; 
+    left: 20px !important; 
+    bottom: 20px !important; 
+  }
+}
