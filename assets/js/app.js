@@ -24,7 +24,7 @@ const dataGraduates = {
     "whatsapp_number": "6285849379953",
     "venue_name": "Galunggung - Sirimau",
     "venue_address": "Jl. Pendidikan No. 1, Kota Anda",
-    "maps_url": "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d497.69684017904086!2d128.19131893598572!3d-3.683785226652667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zM8KwNDEnMDIuMSJTIDEyOMKwMTEnMjkuMiJF!5e0!3m2!1sid!2sid!4v1792718671205!5m2!1sid!2sid",
+    "maps_url": "https://maps.app.goo.gl/NYxhNHMqGdxWh5RR8",
     "dress_code": "Formal modern · earth tone",
     "hero_kicker": "A new chapter begins · 2026",
     "hero_title_line1": "Made for",
