@@ -61,7 +61,6 @@ const dataWishes = [
   const parts = location.pathname.split('/').filter(Boolean);
   let slug = parts[parts.length - 1].replace('.html', ''); 
   
-  // Jika URL tidak memiliki slug (misal hanya /u/), set default
   if (!slug || slug === 'u') {
     slug = 'rud-tuakia'; 
   }
@@ -185,7 +184,6 @@ const dataWishes = [
   }
 
   initMusic();
-  initReveal();
   initTilt();
 })();
 
@@ -219,14 +217,6 @@ function startCountdown(isoDate) {
   setInterval(tick, 1000);
 }
 
-function initReveal() {
-  const io = new IntersectionObserver(
-    entries => entries.forEach(e => e.isIntersecting && e.target.classList.add('visible')),
-    { threshold: 0.12 }
-  );
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-}
-
 function initTilt() {
   document.querySelectorAll('.tilt').forEach(el => {
     el.addEventListener('pointermove', e => {
@@ -243,7 +233,6 @@ function initTilt() {
 // ============ FUNGSI MUSIK SINTESIS (AUTOPLAY) ============
 function initMusic() {
   let ac = null, gain = null, playing = false, loop = null, idx = 0;
-  // Nada-nada piano ambient yang menenangkan
   const notes = [261.63,329.63,392,493.88,392,329.63,293.66,349.23,440,523.25,440,349.23];
 
   function tone(f, t, d, vol, type = 'sine') {
@@ -285,8 +274,37 @@ function initMusic() {
     }
   }
 
-  // Trik Autoplay: Nyalakan saat tamu melakukan klik, sentuh, atau scroll pertama kali
   document.addEventListener('click', start, { once: true });
   document.addEventListener('touchstart', start, { once: true });
   document.addEventListener('scroll', start, { once: true });
 }
+
+// ==========================================
+// EFEK SCROLL MODERN (SMOOTH & REVEAL STAGGER)
+// ==========================================
+(function initSmoothScroll() {
+  // 1. Efek Smooth Scroll
+  document.documentElement.style.scrollBehavior = 'smooth';
+
+  // 2. Efek Reveal (Intersection Observer dengan Stagger)
+  const revealElements = document.querySelectorAll('.reveal');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        // Efek Stagger: Muncul bergantian dengan jeda 100ms
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, index * 100); 
+        
+        // Hentikan observasi setelah elemen muncul
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.15, 
+    rootMargin: "0px 0px -50px 0px" 
+  });
+
+  revealElements.forEach(el => observer.observe(el));
+})();
