@@ -105,3 +105,36 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnNext) btnNext.addEventListener('click', () => { if (currentSlide < slides.length - 1) showSlide(++currentSlide); });
   if (btnPrev) btnPrev.addEventListener('click', () => { if (currentSlide > 0) showSlide(--currentSlide); });
 });
+
+// ==========================================
+// EFEK KURSOR 3D TILT (INTERAKTIF)
+// ==========================================
+document.addEventListener('mousemove', (e) => {
+  // Hanya jalan di layar laptop/PC (bukan HP)
+  if (window.innerWidth < 760) return;
+
+  document.querySelectorAll('.card').forEach(card => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // Jika kursor berada di atas kartu
+    if (x > 0 && x < rect.width && y > 0 && y < rect.height) {
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      // Hitung derajat kemiringan
+      const rotateX = ((y - centerY) / centerY) * -10; 
+      const rotateY = ((x - centerX) / centerX) * 10;
+      
+      card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+      card.style.boxShadow = `0 20px 40px rgba(232, 202, 139, 0.2)`;
+      card.style.borderColor = `rgba(232, 202, 139, 0.5)`;
+    } else {
+      // Kembalikan ke posisi semula
+      card.style.transform = `perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)`;
+      card.style.boxShadow = `none`;
+      card.style.borderColor = `rgba(255, 255, 255, 0.1)`;
+    }
+  });
+});
