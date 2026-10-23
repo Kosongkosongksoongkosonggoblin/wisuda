@@ -82,6 +82,7 @@ const dataWishes = [
 
   document.title = `Undangan Wisuda — ${grad.full_name}`;
 
+  // Render Teks Hero
   if (grad.hero_kicker) setText('heroKicker', grad.hero_kicker);
   if (grad.hero_lead) setText('heroLead', grad.hero_lead);
   if (grad.hero_title_line1) {
@@ -89,9 +90,9 @@ const dataWishes = [
     if (t) t.innerHTML =
       `${escapeHtml(grad.hero_title_line1)}<br>${escapeHtml(grad.hero_title_line2 || '')} <em>${escapeHtml(grad.hero_title_em || '')}</em>`;
   }
-  setText('footerName', grad.full_name);
   if (grad.quote) setText('detailDesc', grad.quote);
 
+  // Render Tanggal
   const date = new Date(grad.graduation_date);
   const dayNum = String(date.getDate()).padStart(2, '0');
   const monthYear = date.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' }).toUpperCase();
@@ -103,10 +104,10 @@ const dataWishes = [
   setText('gradTime', `${dayName} · ${timeStr} WIB – SELESAI`);
   setText('cardTime', `${dayName.toLowerCase().replace(/^\w/, c => c.toUpperCase())}, ${date.getDate()} ${monthYear.toLowerCase()}\nMulai pukul ${timeStr} WIB`);
 
+  // Render Lokasi
   setText('cardVenue', `${grad.venue_name || '—'}`);
   setText('venueName', grad.venue_name || 'Tempat perayaan');
   setText('venueAddress', grad.venue_address || '');
-  setText('venueDesc', [grad.venue_name, grad.university].filter(Boolean).join(' · '));
   const mapsBtn = $('mapsBtn');
   if (mapsBtn) mapsBtn.href = grad.maps_url || '#';
 
@@ -146,7 +147,7 @@ const dataWishes = [
     `).join('') || '<p class="desc">Belum ada ucapan.</p>';
   }
 
-  // Render Nama Tamu (jika ada ?to=Nama)
+  // Render Nama Tamu
   const guestName = new URLSearchParams(location.search).get('to');
   if (guestName) {
     const wrap = $('greetWrap');
@@ -160,10 +161,9 @@ const dataWishes = [
     if (nama) nama.value = guestName;
   }
 
-  // Countdown
   startCountdown(grad.graduation_date);
 
-  // Form RSVP ke WhatsApp
+  // Form RSVP
   const form = $('rsvpForm');
   if (form) {
     form.addEventListener('submit', (e) => {
@@ -229,7 +229,6 @@ function initTilt() {
   });
 }
 
-// ============ FUNGSI MUSIK SINTESIS (AUTOPLAY) ============
 function initMusic() {
   let ac = null, gain = null, playing = false, loop = null, idx = 0;
   const notes = [261.63,329.63,392,493.88,392,329.63,293.66,349.23,440,523.25,440,349.23];
@@ -278,46 +277,39 @@ function initMusic() {
 }
 
 // ==========================================
-// LOGIKA NAVIGASI SLIDE & ANIMASI CSS
+// LOGIKA NAVIGASI SLIDE (FIXED)
 // ==========================================
 (function initSlides() {
   const slides = document.querySelectorAll('.slide');
-  const btnNext = document.getElementById('btnNext');
-  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = $('btnNext');
+  const btnPrev = $('btnPrev');
   let currentSlide = 0;
 
   function showSlide(index) {
+    // Sembunyikan semua slide
     slides.forEach(s => s.classList.remove('active'));
     
-    // Tampilkan slide
+    // Tampilkan slide saat ini
     slides[index].classList.add('active');
     
-    // Ambil semua elemen di dalam slide ini untuk dianimasikan
-    const content = slides[index].querySelectorAll('h1, h2, p, .date, .countdown, .card, .photo-frame, .map-wrapper, form, .timeline');
-    
-    // Reset animasi (sembunyikan dulu)
-    content.forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(30px)';
-      el.style.transition = 'none';
+    // Paksa semua elemen di dalam slide untuk langsung terlihat (anti-blur/blank)
+    const elements = slides[index].querySelectorAll('.reveal');
+    elements.forEach(el => {
+      // Hapus class visible lama jika ada
+      el.classList.remove('visible');
+      
+      // Gunakan setTimeout kecil agar browser sempat me-render ulang sebelum animasi masuk
+      setTimeout(() => {
+        el.classList.add('visible');
+      }, 100);
     });
 
-    // Beri jeda sedikit, lalu mainkan animasi memudar dan naik
-    setTimeout(() => {
-      content.forEach((el, i) => {
-        el.style.transition = `opacity 0.6s ease, transform 0.6s ease`;
-        el.style.transitionDelay = `${i * 0.08}s`; // Efek bergantian (stagger)
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
-      });
-    }, 50);
-
-    // Atur tombol (disabled jika di ujung)
+    // Atur status tombol
     if (btnPrev) btnPrev.disabled = index === 0;
     if (btnNext) btnNext.disabled = index === slides.length - 1;
   }
 
-  // Panggil animasi untuk slide pertama saat halaman dimuat
+  // Tampilkan Slide Pertama
   showSlide(0);
 
   if (btnNext && btnPrev) {
@@ -335,7 +327,7 @@ function initMusic() {
       }
     });
 
-    // Kontrol via keyboard (opsional)
+    // Kontrol via keyboard
     window.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') btnNext.click();
       if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') btnPrev.click();
