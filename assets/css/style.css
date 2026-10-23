@@ -56,7 +56,7 @@ canvas#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
 .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
 .note{color:#858da9;font-size:.8rem;margin-top:18px}
 
-/* FOTO PROFIL (TRANSPARAN) */
+/* FOTO PROFIL */
 .stage{height:480px;position:relative;display:grid;place-items:center;perspective:1100px}
 .orbit{
   position:absolute;width:370px;height:370px;border:1px solid #e8ca8b40;
@@ -78,7 +78,6 @@ canvas#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
   z-index: 2;
   animation: floatPhoto 6s ease-in-out infinite; 
 }
-
 .hero-photo {
   width: 100%;
   height: 100%;
@@ -104,7 +103,7 @@ canvas#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
 .date strong{font:3rem 'Playfair Display',serif;color:#a77b36}
 .date div{text-align:left;font-size:.82rem;line-height:1.6;letter-spacing:.06em}
 
-/* CARDS (Detail & Galeri) */
+/* CARDS */
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:25px}
 .card{
   padding:28px;border-radius:22px;background:linear-gradient(145deg,#ffffff0e,#ffffff04);
@@ -150,7 +149,7 @@ canvas#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
 .form option{color:#171a2b}
 .form button{width:100%;margin-top:18px}
 
-/* PERBAIKAN WARNA FORM DI SECTION TERANG */
+/* PERBAIKAN FORM DI SECTION TERANG */
 .section.light .form label { color: #475569; }
 .section.light .form input, 
 .section.light .form select, 
@@ -218,85 +217,43 @@ canvas#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
 @keyframes pulse{50%{box-shadow:0 0 0 7px #e8ca8b22}}
 
 /* =========================================
-   MEDIA QUERY (TAMPILAN HP / RESPONSIVE)
+   MEDIA QUERY (TAMPILAN HP) - SANGAT KETAT
    ========================================= */
 @media(max-width:760px){
   /* Navbar */
-  .nav{flex-direction:column;gap:15px}
-  .nav nav{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+  .nav{flex-direction:column;gap:15px;text-align:center}
+  .nav nav{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:10px}
   .nav a{margin-left:0;font-size:.8rem}
   
   /* Hero Section */
-  .hero{grid-template-columns:1fr;text-align:center;padding-top:30px;padding-bottom:50px;gap:0}
-  .hero h1{font-size:clamp(2.8rem,12vw,4rem);letter-spacing:-.03em}
+  .hero{grid-template-columns:1fr;text-align:center;padding-top:20px;padding-bottom:30px;gap:0}
+  .hero h1{font-size:clamp(2.5rem,12vw,3.5rem);letter-spacing:-.03em;margin:15px 0}
   .lead{margin:0 auto;font-size:.95rem;padding:0 15px}
-  .actions{justify-content:center}
+  .actions{justify-content:center;flex-direction:column;width:100%;padding:0 20px}
+  .btn{width:100%;justify-content:center}
   
-  /* Mengatur Foto Profil agar tidak meluber */
-  .photo-frame{width:220px;height:340px;margin:40px auto 20px auto}
-  .glass{bottom:0;font-size:.65rem}
+  /* Foto Profil */
+  .photo-frame{width:200px;height:300px;margin:30px auto 10px auto}
+  .glass{bottom:-10px;font-size:.65rem}
   
-  /* Section & Grid */
-  .cards{grid-template-columns:1fr}
-  .section{padding:70px 0}
-  .date{gap:15px;padding:16px}
-  .date strong{font-size:2.5rem}
-  .event{grid-template-columns:95px 1fr;gap:12px}
+  /* Cards & Grid */
+  .cards{grid-template-columns:1fr;padding:0 15px}
+  
+  /* Tanggal */
+  .date{flex-direction:column;gap:10px;padding:15px;width:90%;margin:20px auto}
+  .date div{text-align:center;font-size:.9rem}
+  
+  /* Countdown */
+  .countdown{grid-template-columns:repeat(2,1fr);padding:0 15px;gap:10px}
+  
+  /* Timeline Acara */
+  .timeline{padding:0 15px}
+  .event{grid-template-columns:1fr;gap:5px;text-align:left;padding:15px 0}
   
   /* Form RSVP */
   .form{padding:0 15px}
-}
-
-@media(prefers-reduced-motion:reduce){
-  *,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}
-}
-
-
-/* =========================================
-   PERBAIKAN DARURAT UNTUK LAYAR HP
-   ========================================= */
-@media (max-width: 760px) {
-  /* 1. Paksa tanggal agar mengecil dan berada di tengah */
-  .date {
-    flex-direction: column !important;
-    gap: 10px !important;
-    padding: 15px 20px !important;
-    width: 90% !important;
-    margin: 20px auto !important;
-  }
-  .date div {
-    text-align: center !important;
-  }
-
-  /* 2. Paksa kotak countdown agar tidak meluber ke samping */
-  .countdown {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 10px !important;
-    padding: 0 15px !important;
-  }
-  .cd-box {
-    padding: 15px 10px !important;
-  }
-
-  /* 3. Paksa kartu (Waktu, Lokasi, Dresscode) agar lebar 100% layar */
-  .cards {
-    grid-template-columns: 1fr !important;
-    padding: 0 15px !important;
-  }
-  .card {
-    padding: 20px !important;
-  }
-
-  /* 4. Paksa timeline agar teksnya turun ke bawah (tidak sejajar) */
-  .event {
-    grid-template-columns: 1fr !important;
-    gap: 5px !important;
-    text-align: left !important;
-  }
-
-  /* 5. Paksa form RSVP agar tidak melebar */
-  .form {
-    width: 100% !important;
-    padding: 0 15px !important;
-  }
+  
+  /* Section Padding */
+  .section{padding:60px 0}
+  .section h2{font-size:2.2rem}
 }
