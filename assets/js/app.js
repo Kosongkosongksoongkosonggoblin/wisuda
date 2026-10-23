@@ -7,45 +7,80 @@ function escapeHtml(str) {
   }[c]));
 }
 
-(async function init() {
-  // ==========================================
-  // PERBAIKAN LOGIKA SLUG URL
-  // ==========================================
+// ============================================================
+// DATA WISUDAWAN (DITANAM LANGSUNG DI SINI)
+// ============================================================
+const dataGraduates = {
+  "rud-tuakia": {
+    "slug": "rud-tuakia",
+    "full_name": "Rud Tuakia",
+    "nickname": "Rizky",
+    "nim": "20200101",
+    "major": "Teknik Informatika",
+    "faculty": "Fakultas Teknik",
+    "university": "Universitas Nusantara",
+    "graduation_date": "2026-10-24T08:00:00+07:00",
+    "quote": "Setiap langkah kecil membawa kami ke momen besar ini.",
+    "whatsapp_number": "6281234567890",
+    "venue_name": "Auditorium Universitas Pattimura",
+    "venue_address": "Jl. Pendidikan No. 1, Kota Anda",
+    "maps_url": "https://maps.google.com/?q=auditorium+universitas",
+    "dress_code": "Formal modern · earth tone",
+    "hero_kicker": "A new chapter begins · 2026",
+    "hero_title_line1": "Made for",
+    "hero_title_line2": "this",
+    "hero_title_em": "moment.",
+    "hero_lead": "Sebuah perjalanan, ribuan cerita, dan satu pencapaian yang layak dirayakan. Dengan penuh syukur, kami mengundang Anda untuk menjadi bagian dari hari istimewa ini.",
+    "schedules": [
+      { "time": "07.00 WIB", "title": "Welcome & registration", "desc": "Penyambutan tamu dan registrasi" },
+      { "time": "08.00 WIB", "title": "Opening ceremony", "desc": "Pembukaan dan doa bersama" },
+      { "time": "09.00 WIB", "title": "Graduation moment", "desc": "Prosesi wisuda dan sesi penghargaan" },
+      { "time": "11.00 WIB", "title": "Memories together", "desc": "Foto bersama dan ramah tamah" }
+    ],
+    "galleries": [
+      { "url": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800&auto=format&fit=crop", "caption": "Awal perjalanan" },
+      { "url": "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=800&auto=format&fit=crop", "caption": "Bersama teman" },
+      { "url": "https://images.unsplash.com/photo-1525921429624-479b6a26d84d?q=80&w=800&auto=format&fit=crop", "caption": "Hari kelulusan" }
+    ]
+  }
+};
+
+// ============================================================
+// DATA UCAPAN (DITANAM LANGSUNG)
+// ============================================================
+const dataWishes = [
+  { "name": "Andi", "message": "Selamat wisuda! Semoga sukses selalu di babak baru ini." },
+  { "name": "Keluarga Besar", "message": "Bangga sekali dengan pencapaianmu. Doa kami menyertaimu." },
+  { "name": "Sahabat Kampus", "message": "Akhirnya! Perjuangan panjang terbayar. Selamat ya!" }
+];
+
+// ============================================================
+// LOGIKA UTAMA
+// ============================================================
+(function init() {
   const parts = location.pathname.split('/').filter(Boolean);
   let slug = parts[parts.length - 1].replace('.html', ''); 
   
-  // Jika URL tidak memiliki slug (misal hanya /u/), kita set default
+  // Jika URL tidak memiliki slug (misal hanya /u/), set default
   if (!slug || slug === 'u') {
     slug = 'rud-tuakia'; 
   }
 
-  let graduates = {};
-  try {
-    // Fetch data dengan path relatif
-    const res = await fetch('./data/graduates.json', { cache: 'no-store' });
-    if (!res.ok) throw new Error('Gagal mengambil data JSON');
-    graduates = await res.json();
-  } catch (e) {
-    console.error('Gagal load graduates.json', e);
-  }
-
-  const grad = graduates[slug];
+  const grad = dataGraduates[slug];
   
-  // Jika data tidak ditemukan di JSON
   if (!grad) {
     document.body.innerHTML = `
       <div style="min-height:100vh;display:grid;place-items:center;text-align:center;
                   padding:20px;font-family:'DM Sans',sans-serif;color:#f8f5ee">
         <div>
           <h1 style="font-size:2rem;margin-bottom:12px">Undangan tidak ditemukan</h1>
-          <p style="color:#aab2ca">Data untuk "${slug}" tidak ada di graduates.json.</p>
+          <p style="color:#aab2ca">Data untuk "${slug}" tidak ditemukan.</p>
           <a href="/" style="color:#e8ca8b;display:inline-block;margin-top:18px">← Kembali</a>
         </div>
       </div>`;
     return;
   }
 
-  // Lanjut mengisi konten jika data ditemukan
   document.title = `Undangan Wisuda — ${grad.full_name}`;
 
   if (grad.hero_kicker) setText('heroKicker', grad.hero_kicker);
@@ -79,6 +114,7 @@ function escapeHtml(str) {
 
   if (grad.dress_code) setText('cardDress', grad.dress_code);
 
+  // Render Timeline
   const timeline = $('timeline');
   if (timeline && grad.schedules) {
     timeline.innerHTML = grad.schedules.map(s => `
@@ -89,6 +125,7 @@ function escapeHtml(str) {
     `).join('');
   }
 
+  // Render Galeri
   const galleryList = $('galleryList');
   if (galleryList && grad.galleries) {
     galleryList.innerHTML = grad.galleries.map(g => `
@@ -99,23 +136,19 @@ function escapeHtml(str) {
     `).join('');
   }
 
-  try {
-    const res = await fetch('./data/wishes.json', { cache: 'no-store' });
-    const wishes = await res.json();
-    const list = $('wishesList');
-    if (list) {
-      list.innerHTML = wishes.map(w => `
-        <article class="card">
-          <div class="ico">❝</div>
-          <p style="color:#f8f5ee;font-style:italic">${escapeHtml(w.message)}</p>
-          <p style="margin-top:12px;color:#e8ca8b;font-weight:700">— ${escapeHtml(w.name)}</p>
-        </article>
-      `).join('') || '<p class="desc">Belum ada ucapan.</p>';
-    }
-  } catch (e) {
-    console.warn('wishes.json belum ada');
+  // Render Ucapan
+  const list = $('wishesList');
+  if (list) {
+    list.innerHTML = dataWishes.map(w => `
+      <article class="card">
+        <div class="ico">❝</div>
+        <p style="color:#f8f5ee;font-style:italic">${escapeHtml(w.message)}</p>
+        <p style="margin-top:12px;color:#e8ca8b;font-weight:700">— ${escapeHtml(w.name)}</p>
+      </article>
+    `).join('') || '<p class="desc">Belum ada ucapan.</p>';
   }
 
+  // Render Nama Tamu (jika ada ?to=Nama)
   const guestName = new URLSearchParams(location.search).get('to');
   if (guestName) {
     const wrap = $('greetWrap');
@@ -129,8 +162,10 @@ function escapeHtml(str) {
     if (nama) nama.value = guestName;
   }
 
+  // Countdown
   startCountdown(grad.graduation_date);
 
+  // Form RSVP ke WhatsApp
   const form = $('rsvpForm');
   if (form) {
     form.addEventListener('submit', (e) => {
@@ -154,6 +189,7 @@ function escapeHtml(str) {
   initTilt();
 })();
 
+// ============ FUNGSI PENDUKUNG ============
 function startCountdown(isoDate) {
   const target = new Date(isoDate).getTime();
   const el = $('countdown');
