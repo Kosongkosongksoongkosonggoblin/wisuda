@@ -1,6 +1,9 @@
 const $ = (id) => document.getElementById(id);
 const setText = (id, v) => { const el = $(id); if (el) el.textContent = v; };
 
+// ============================================================
+// 1. DATA WISUDAWAN
+// ============================================================
 const dataGraduates = {
   "undangan": {
     "slug": "undangan",
@@ -35,6 +38,9 @@ const dataWishes = [
   { "name": "Keluarga Besar", "message": "Bangga sekali dengan pencapaianmu. Doa kami menyertaimu." }
 ];
 
+// ============================================================
+// 2. LOGIKA UTAMA (RENDER DATA & SLIDE)
+// ============================================================
 document.addEventListener('DOMContentLoaded', () => {
   const grad = dataGraduates["undangan"];
 
@@ -56,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if ($('gradMonth')) setText('gradMonth', monthYear);
   if ($('gradTime')) setText('gradTime', `${dayName} · ${timeStr} WIB – SELESAI`);
   
-  // --- INI YANG MENGISI "MEMUAT..." MENJADI WAKTU ---
+  // Isi Kotak Waktu (Memperbaiki tulisan "Memuat...")
   if ($('cardTime')) setText('cardTime', `${dayName.toLowerCase().replace(/^\w/, c => c.toUpperCase())}, ${date.getDate()} ${monthYear.toLowerCase()}\nMulai pukul ${timeStr} WIB`);
 
   // Isi Lokasi & Dress Code
@@ -106,9 +112,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnPrev) btnPrev.addEventListener('click', () => { if (currentSlide > 0) showSlide(--currentSlide); });
 });
 
-// ==========================================
-// EFEK KURSOR 3D TILT (INTERAKTIF)
-// ==========================================
+// ============================================================
+// 3. EFEK KURSOR 3D TILT (INTERAKTIF)
+// ============================================================
 document.addEventListener('mousemove', (e) => {
   // Hanya jalan di layar laptop/PC (bukan HP)
   if (window.innerWidth < 760) return;
@@ -137,4 +143,37 @@ document.addEventListener('mousemove', (e) => {
       card.style.borderColor = `rgba(255, 255, 255, 0.1)`;
     }
   });
+});
+
+// ============================================================
+// 4. MUSIK (MP3 DARI URL & TOMBOL KONTROL)
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  // Lagu Piano Instrumental dari Pixabay (Bebas Hak Cipta)
+  const audio = new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=wistful-harp-10784.mp3');
+  audio.loop = true;
+  audio.volume = 0.4;
+
+  const btn = document.getElementById('musicBtn');
+  
+  if (btn) {
+    btn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        btn.classList.add('playing');
+      } else {
+        audio.pause();
+        btn.classList.remove('playing');
+      }
+    });
+  }
+
+  // Coba autoplay saat tamu pertama kali menyentuh layar
+  document.addEventListener('click', () => {
+    if (audio.paused && btn && !btn.classList.contains('playing')) {
+      audio.play().then(() => {
+        btn.classList.add('playing');
+      }).catch(() => {});
+    }
+  }, { once: true });
 });
