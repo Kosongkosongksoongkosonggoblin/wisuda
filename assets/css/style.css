@@ -164,3 +164,14 @@ h2 em{color:var(--gold)}
   .map-wrapper { height: 300px; }
   .map-info-card { width: calc(100% - 40px) !important; left: 20px !important; bottom: 20px !important; }
 }
+
+/* =========================================
+   OBAT DARURAT: PAKSA HAPUS BLUR & TRANSPARAN
+   ========================================= */
+.reveal, .slide-content > div, .slide-content h1, .slide-content h2, .slide-content p, .photo-frame, .map-wrapper {
+  filter: none !important;
+  -webkit-filter: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+}
