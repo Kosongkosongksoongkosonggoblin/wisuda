@@ -11,8 +11,8 @@ function escapeHtml(str) {
 // DATA WISUDAWAN (DITANAM LANGSUNG DI SINI)
 // ============================================================
 const dataGraduates = {
-  "rud-tuakia": {
-    "slug": "rud-tuakia",
+  "undangan": {
+    "slug": "undangan",
     "full_name": "Rud Tuakia",
     "nickname": "Rud",
     "nim": "20200101",
