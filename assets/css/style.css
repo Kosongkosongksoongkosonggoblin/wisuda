@@ -125,3 +125,13 @@ h2 em{color:var(--gold)}
   .map-wrapper { height: 300px; }
   .map-info-card { width: calc(100% - 40px); left: 20px; bottom: 20px; }
 }
+
+/* PAKSA TAMPIL TERANG */
+body, h1, h2, p, .slide, .slide-content, .reveal {
+  filter: none !important;
+  -webkit-filter: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  blur: 0 !important;
+  visibility: visible !important;
+}
