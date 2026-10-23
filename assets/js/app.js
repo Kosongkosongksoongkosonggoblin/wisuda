@@ -104,7 +104,7 @@ const dataWishes = [
   setText('gradTime', `${dayName} · ${timeStr} WIB – SELESAI`);
   setText('cardTime', `${dayName.toLowerCase().replace(/^\w/, c => c.toUpperCase())}, ${date.getDate()} ${monthYear.toLowerCase()}\nMulai pukul ${timeStr} WIB`);
 
-  setText('cardVenue', `${grad.venue_name || '—'}\n${grad.university || ''}`);
+  setText('cardVenue', `${grad.venue_name || '—'}`);
   setText('venueName', grad.venue_name || 'Tempat perayaan');
   setText('venueAddress', grad.venue_address || '');
   setText('venueDesc', [grad.venue_name, grad.university].filter(Boolean).join(' · '));
