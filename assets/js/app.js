@@ -240,20 +240,53 @@ function initTilt() {
   });
 }
 
-// ---- FUNGSI MUSIK BARU (AUTOPLAY MP3) ----
+// ============ FUNGSI MUSIK SINTESIS (AUTOPLAY) ============
 function initMusic() {
-  // Menggunakan URL lagu instrumental piano dari Pixabay (Bebas Hak Cipta)
-  const audio = new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=wistful-harp-10784.mp3');
-  audio.loop = true;
-  audio.volume = 0.3; // Volume 30% agar tidak terlalu keras
+  let ac = null, gain = null, playing = false, loop = null, idx = 0;
+  // Nada-nada piano ambient yang menenangkan
+  const notes = [261.63,329.63,392,493.88,392,329.63,293.66,349.23,440,523.25,440,349.23];
 
-  // Fungsi untuk memutar lagu
-  const playMusic = () => {
-    audio.play().catch(err => console.log('Autoplay diblokir browser:', err));
-  };
+  function tone(f, t, d, vol, type = 'sine') {
+    const o = ac.createOscillator();
+    const g = ac.createGain();
+    o.type = type;
+    o.frequency.setValueAtTime(f, t);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol, t + 0.12);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+    o.connect(g); g.connect(gain);
+    o.start(t); o.stop(t + d + 0.03);
+  }
 
-  // Trik Autoplay: Putar otomatis segera setelah tamu menyentuh layar atau scroll
-  document.addEventListener('click', playMusic, { once: true });
-  document.addEventListener('touchstart', playMusic, { once: true });
-  document.addEventListener('scroll', playMusic, { once: true });
+  function tick() {
+    if (!playing || !ac) return;
+    const t = ac.currentTime;
+    tone(notes[idx % notes.length], t, 1.5, 0.055);
+    if (idx % 3 === 0) tone(notes[idx % notes.length] / 2, t, 0.9, 0.025, 'triangle');
+    if (idx % 4 === 0) tone(notes[(idx + 4) % notes.length] * 2, t + 0.1, 1.1, 0.018);
+    idx++;
+  }
+
+  async function start() {
+    try {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      ac = ac || new AC();
+      await ac.resume();
+      if (playing) return;
+      gain = ac.createGain();
+      gain.gain.value = 0.65;
+      gain.connect(ac.destination);
+      playing = true;
+      tick();
+      loop = setInterval(tick, 850);
+    } catch (e) {
+      console.log('Audio diblokir');
+    }
+  }
+
+  // Trik Autoplay: Nyalakan saat tamu melakukan klik, sentuh, atau scroll pertama kali
+  document.addEventListener('click', start, { once: true });
+  document.addEventListener('touchstart', start, { once: true });
+  document.addEventListener('scroll', start, { once: true });
 }
