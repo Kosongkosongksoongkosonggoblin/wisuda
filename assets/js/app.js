@@ -39,6 +39,7 @@ const dataWishes = [
 
   document.title = `Undangan Wisuda — ${grad.full_name}`;
 
+  // Isi Data
   setText('heroKicker', grad.hero_kicker);
   setText('heroLead', grad.hero_lead);
   $('heroTitle').innerHTML = `${grad.hero_title_line1}<br>${grad.hero_title_line2} <em>${grad.hero_title_em}</em>`;
@@ -65,21 +66,91 @@ const dataWishes = [
     <article class="card"><p>"${w.message}"</p><p style="color:var(--gold)">— ${w.name}</p></article>
   `).join('');
 
-  // Logika Tombol Panah Sederhana
+  // Navigasi Slide & Animasi
   const slides = document.querySelectorAll('.slide');
   const btnNext = $('btnNext');
   const btnPrev = $('btnPrev');
   let currentSlide = 0;
 
   function showSlide(index) {
+    // Sembunyikan semua slide
     slides.forEach(s => s.classList.remove('active'));
+    // Tampilkan slide yang aktif
     slides[index].classList.add('active');
-    if(btnPrev) btnPrev.disabled = index === 0;
-    if(btnNext) btnNext.disabled = index === slides.length - 1;
+
+    // Animasi untuk elemen di dalam slide
+    const elements = slides[index].querySelectorAll('.slide-content > *');
+    elements.forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'none';
+      
+      setTimeout(() => {
+        el.style.transition = `opacity 0.6s ease, transform 0.6s ease`;
+        el.style.transitionDelay = `${i * 0.1}s`; // Efek muncul bergantian
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, 50);
+    });
+
+    if (btnPrev) btnPrev.disabled = index === 0;
+    if (btnNext) btnNext.disabled = index === slides.length - 1;
   }
 
   showSlide(0);
 
-  if(btnNext) btnNext.addEventListener('click', () => { if (currentSlide < slides.length - 1) showSlide(++currentSlide); });
-  if(btnPrev) btnPrev.addEventListener('click', () => { if (currentSlide > 0) showSlide(--currentSlide); });
+  if (btnNext) btnNext.addEventListener('click', () => { if (currentSlide < slides.length - 1) showSlide(++currentSlide); });
+  if (btnPrev) btnPrev.addEventListener('click', () => { if (currentSlide > 0) showSlide(--currentSlide); });
+
+  // === MUSIK (AUTOPLAY SAAT DISENTUH) ===
+  initMusic();
 })();
+
+// Fungsi Musik Sintesis (Lagu Ambient)
+function initMusic() {
+  let ac = null, gain = null, playing = false, loop = null, idx = 0;
+  const notes = [261.63,329.63,392,493.88,392,329.63,293.66,349.23,440,523.25,440,349.23];
+
+  function tone(f, t, d, vol, type = 'sine') {
+    const o = ac.createOscillator();
+    const g = ac.createGain();
+    o.type = type;
+    o.frequency.setValueAtTime(f, t);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol, t + 0.12);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+    o.connect(g); g.connect(gain);
+    o.start(t); o.stop(t + d + 0.03);
+  }
+
+  function tick() {
+    if (!playing || !ac) return;
+    const t = ac.currentTime;
+    tone(notes[idx % notes.length], t, 1.5, 0.055);
+    if (idx % 3 === 0) tone(notes[idx % notes.length] / 2, t, 0.9, 0.025, 'triangle');
+    if (idx % 4 === 0) tone(notes[(idx + 4) % notes.length] * 2, t + 0.1, 1.1, 0.018);
+    idx++;
+  }
+
+  async function start() {
+    try {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      ac = ac || new AC();
+      await ac.resume();
+      if (playing) return;
+      gain = ac.createGain();
+      gain.gain.value = 0.5; // Volume Musik (0.0 - 1.0)
+      gain.connect(ac.destination);
+      playing = true;
+      tick();
+      loop = setInterval(tick, 850);
+    } catch (e) {
+      console.log('Audio diblokir browser');
+    }
+  }
+
+  // Nyalakan musik otomatis saat tamu mengklik atau menyentuh layar
+  document.addEventListener('click', start, { once: true });
+  document.addEventListener('touchstart', start, { once: true });
+}
