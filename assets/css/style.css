@@ -280,32 +280,32 @@ canvas#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
 
 
 /* =========================================
-   DESAIN NAMA WISUDAWAN (Mewah & Elegan)
+   DESAIN NAMA WISUDAWAN (SANGAT TERANG & MEWAH)
    ========================================= */
 .name-tag {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 15px;
-  margin-top: 15px;
-  /* Menggunakan font serif yang elegan untuk nama */
+  margin-top: 25px; /* Jarak ditambah sedikit */
   font-family: 'Playfair Display', Georgia, serif;
-  letter-spacing: 0.25em;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #f8f5ee;
+  letter-spacing: 0.2em;
+  font-size: 1.1rem; /* Ukuran diperbesar sedikit */
+  font-weight: 700;
   
-  /* Efek Teks Emas Berkilau */
-  text-shadow: 0 0 10px rgba(232, 202, 139, 0.5), 0 0 20px rgba(232, 202, 139, 0.2);
+  /* Memastikan teks tidak transparan */
+  opacity: 1 !important; 
+  animation: none !important; /* Mematikan animasi yang membuat buram */
   
-  /* Animasi masuk perlahan */
-  animation: fadeUpName 1.5s ease-out forwards;
-  opacity: 0;
+  /* Efek cahaya emas yang lebih terang */
+  text-shadow: 0 0 15px rgba(232, 202, 139, 0.8), 0 0 5px rgba(255, 255, 255, 0.5);
+  position: relative;
+  z-index: 20;
 }
 
 .name-text {
-  /* Memberikan warna gradasi emas pada teks */
-  background: linear-gradient(135deg, #fff0c5 0%, #e8ca8b 50%, #b98b47 100%);
+  /* Warna emas yang sangat terang dan solid */
+  background: linear-gradient(135deg, #ffffff 0%, #ffeaa7 40%, #e8ca8b 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-transform: uppercase;
@@ -315,31 +315,18 @@ canvas#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
 .name-tag .line {
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(232, 202, 139, 0.8), transparent);
+  background: linear-gradient(90deg, transparent, #e8ca8b, transparent);
   max-width: 80px;
-}
-
-/* Animasi khusus untuk nama */
-@keyframes fadeUpName {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-    letter-spacing: 0.1em;
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    letter-spacing: 0.25em;
-  }
+  opacity: 0.8;
 }
 
 /* Penyesuaian responsif untuk HP */
 @media (max-width: 760px) {
   .name-tag {
-    font-size: 0.8rem;
+    font-size: 0.95rem;
     gap: 10px;
-    letter-spacing: 0.2em;
-    margin-top: 20px;
+    letter-spacing: 0.15em;
+    margin-top: 15px;
   }
   .name-tag .line {
     max-width: 40px;
