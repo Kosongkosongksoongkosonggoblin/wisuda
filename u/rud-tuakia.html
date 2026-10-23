@@ -99,17 +99,30 @@
     </div>
   </section>
 
+  <!-- LOKASI (MAPS PREVIEW MODERN) -->
   <section class="section center" id="lokasi">
     <div class="wrap reveal">
       <div class="kicker">Find the venue</div>
       <h2>See you <em>there.</em></h2>
       <p class="desc" id="venueDesc">Auditorium Universitas · Kota Anda</p>
-      <div class="mapcard">
-        <div class="pin">⌖</div>
-        <h3 id="venueName">Tempat perayaan</h3>
-        <p style="color:#b9c1d8" id="venueAddress">—</p>
-        <a class="btn" id="mapsBtn" target="_blank" rel="noopener"
-           href="#" style="margin-top:18px">Buka Google Maps ↗</a>
+      
+      <!-- Kontainer Peta Modern -->
+      <div class="map-wrapper">
+        <iframe 
+          id="googleMapsIframe"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15898.417705562454!2d128.1813456!3d-3.6954321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwNDEnNDMuNiJTIDEyOMKwMTEnMDEuMSJF!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid" 
+          width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        
+        <!-- Kotak Info Melayang (Glassmorphism) -->
+        <div class="map-info-card">
+          <div class="pin">⌖</div>
+          <h3 id="venueName">Tempat perayaan</h3>
+          <p id="venueAddress">—</p>
+          <a class="btn" id="mapsBtn" target="_blank" rel="noopener" href="#">
+            Buka di Google Maps ↗
+          </a>
+        </div>
       </div>
     </div>
   </section>
