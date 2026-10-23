@@ -278,7 +278,7 @@ function initMusic() {
 }
 
 // ==========================================
-// LOGIKA NAVIGASI SLIDE (KLIK PANAH)
+// LOGIKA NAVIGASI SLIDE & ANIMASI CSS
 // ==========================================
 (function initSlides() {
   const slides = document.querySelectorAll('.slide');
@@ -287,16 +287,38 @@ function initMusic() {
   let currentSlide = 0;
 
   function showSlide(index) {
-    // Sembunyikan semua slide
-    slides.forEach(s => s.classList.remove('active', 'prev'));
+    slides.forEach(s => s.classList.remove('active'));
     
-    // Tampilkan slide saat ini
+    // Tampilkan slide
     slides[index].classList.add('active');
     
-    // Atur status tombol (disabled jika di ujung)
+    // Ambil semua elemen di dalam slide ini untuk dianimasikan
+    const content = slides[index].querySelectorAll('h1, h2, p, .date, .countdown, .card, .photo-frame, .map-wrapper, form, .timeline');
+    
+    // Reset animasi (sembunyikan dulu)
+    content.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'none';
+    });
+
+    // Beri jeda sedikit, lalu mainkan animasi memudar dan naik
+    setTimeout(() => {
+      content.forEach((el, i) => {
+        el.style.transition = `opacity 0.6s ease, transform 0.6s ease`;
+        el.style.transitionDelay = `${i * 0.08}s`; // Efek bergantian (stagger)
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      });
+    }, 50);
+
+    // Atur tombol (disabled jika di ujung)
     if (btnPrev) btnPrev.disabled = index === 0;
     if (btnNext) btnNext.disabled = index === slides.length - 1;
   }
+
+  // Panggil animasi untuk slide pertama saat halaman dimuat
+  showSlide(0);
 
   if (btnNext && btnPrev) {
     btnNext.addEventListener('click', () => {
