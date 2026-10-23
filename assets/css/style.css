@@ -277,3 +277,71 @@ canvas#stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
   .section{padding:60px 0}
   .section h2{font-size:2.2rem}
 }
+
+
+/* =========================================
+   DESAIN NAMA WISUDAWAN (Mewah & Elegan)
+   ========================================= */
+.name-tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+  /* Menggunakan font serif yang elegan untuk nama */
+  font-family: 'Playfair Display', Georgia, serif;
+  letter-spacing: 0.25em;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #f8f5ee;
+  
+  /* Efek Teks Emas Berkilau */
+  text-shadow: 0 0 10px rgba(232, 202, 139, 0.5), 0 0 20px rgba(232, 202, 139, 0.2);
+  
+  /* Animasi masuk perlahan */
+  animation: fadeUpName 1.5s ease-out forwards;
+  opacity: 0;
+}
+
+.name-text {
+  /* Memberikan warna gradasi emas pada teks */
+  background: linear-gradient(135deg, #fff0c5 0%, #e8ca8b 50%, #b98b47 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+}
+
+/* Garis dekoratif di kiri dan kanan nama */
+.name-tag .line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232, 202, 139, 0.8), transparent);
+  max-width: 80px;
+}
+
+/* Animasi khusus untuk nama */
+@keyframes fadeUpName {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    letter-spacing: 0.1em;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: 0.25em;
+  }
+}
+
+/* Penyesuaian responsif untuk HP */
+@media (max-width: 760px) {
+  .name-tag {
+    font-size: 0.8rem;
+    gap: 10px;
+    letter-spacing: 0.2em;
+    margin-top: 20px;
+  }
+  .name-tag .line {
+    max-width: 40px;
+  }
+}
